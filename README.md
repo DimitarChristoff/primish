@@ -374,10 +374,10 @@ There is an alternative syntax to allow `late implementation` via the `.mixin` m
 ```javascript
 myClass.implement(new OtherClass());
 // or chaining on an instance
-instanceofMyClass.implement(new OtherClass2()).mixin(new OtherClass3());
+instanceofMyClass.implement(new OtherClass2()).implement(new OtherClass3());
 
 // late binding at proto definition also works
-var myClass = prime({}).mimplement(new OtherClass);
+var myClass = prime({}).implement(new OtherClass);
 ```
 
 <div class="alert">Note: When a mixin is implemented, the mixin Class is instantiated (via `new`) and the methods are copied from
