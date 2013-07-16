@@ -20,7 +20,9 @@ module.exports = function(grunt){
 					output: '<%= output%>',
 					title: 'primish documentation',
 					images: 'example/images',
-					logo: 'images/primish.png'
+					logo: 'images/primish.png',
+					twitter: 'D_mitar',
+					github: 'git@github.com:DimitarChristoff/primish.git'
 				},
 				files: {
 					'<%= output%>/index.html': './README.md'

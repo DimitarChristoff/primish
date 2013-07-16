@@ -8,13 +8,28 @@
 </head>
 <body>
 
+<a id="github-ribbon" href="git@github.com:DimitarChristoff/primish.git"><img alt="Fork me on GitHub" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
 <div id="nav">
 	<div class="separator"></div>
 	<a title="primish documentation" class="brand" href="#" style="background-image:url(images/primish.png)"></a>
 	<div class="separator"></div>
 	
-	<ul id="sections"><li class="l2"><a href="#changes-from-upstream">Changes from upstream</a><ul><li class="l3"><a href="#changes-from-upstream/prime-changes">prime changes</a></li><li class="l3"><a href="#changes-from-upstream/emitter-changes">emitter changes</a></li><li class="l3"><a href="#changes-from-upstream/options">options</a></li></ul></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li><li class="l3"><a href="#creating-a-class/mixins">mixins</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li></ul>
+		<div class="twitter extra">
+
+			<iframe allowtransparency="true" frameborder="0" scrolling="no" style="width: 162px; height: 20px;" src="https://platform.twitter.com/widgets/follow_button.html?screen_name=D_mitar&amp;show_count=false"></iframe>
+		</div>
+		<div class="separator"></div>
+	
+	<ul id="sections"><li class="l2"><a href="#changes-from-upstream">Changes from upstream</a><ul><li class="l3"><a href="#changes-from-upstream/prime-changes">prime changes</a></li><li class="l3"><a href="#changes-from-upstream/emitter-changes">emitter changes</a></li><li class="l3"><a href="#changes-from-upstream/options">options</a></li></ul></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li><li class="l3"><a href="#creating-a-class/mixins">mixins</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li></ul>
 	<div class="separator"></div>
+	
+		<div class="extra" id="github">
+			<a href="git@github.com:DimitarChristoff/primish.git">Source on Github</a>
+		</div>
+		<div class="extra" id="github-issues">
+			<a href="git@github.com:DimitarChristoff/primish.git/issues">Issues</a>
+		</div>
 	
 	
 	<div class="extra generated">
@@ -520,6 +535,19 @@ model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create e
         }
     });
 });</code></pre>
+<h2 id="setup">Setup</h2>
+<pre><code class="lang-sh"># pull the deps
+$ npm install
+
+# run the tests
+$ npm test
+
+# generate docs
+$ npm install -g grunt-cli
+$ grunt
+$ cd dist
+$ python -m SimpleHTTPServer
+# go to http://localhost:8000</code></pre>
 
 	
 </div>
