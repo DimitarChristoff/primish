@@ -361,10 +361,10 @@ definition. Mixins do not work via inheritance, they create a local instance of 
 <p>There is an alternative syntax to allow <code>late implementation</code> via the <code>.mixin</code> method:</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">myClass.implement(new OtherClass());
 // or chaining on an instance
-instanceofMyClass.implement(new OtherClass2()).mixin(new OtherClass3());
+instanceofMyClass.implement(new OtherClass2()).implement(new OtherClass3());
 
 // late binding at proto definition also works
-var myClass = prime({}).mimplement(new OtherClass);</code></pre>
+var myClass = prime({}).implement(new OtherClass);</code></pre>
 <p><div class="alert">Note: When a mixin is implemented, the mixin Class is instantiated (via <code>new</code>) and the methods are copied from
 the instance, not the prototype. Changing the mixin prototype afterwards will not automatically make the changes available
 in your Class instances (unlike when using <a href="#extend">extend</a>)</div></p>
