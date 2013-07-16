@@ -1,4 +1,10 @@
-(function(){
+/*
+ primish 0.1.0
+ - prototypish inheritance
+
+ options mixin that works with emitter also
+ */
+;(function(){
 	'use strict';
 
 	// common code to return under any env
@@ -34,12 +40,16 @@
 		});
 	}; // wrap
 
-	if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 		// define as an anonymous module so, through path mapping, it can be
 		// referenced as the "underscore" module
 		define(['./prime'], wrap);
 	}
-	else {
+	else if (typeof module !== 'undefined' && module.exports){
+		// CommonJS module is defined
 		module.exports = wrap(require('./prime'));
 	}
-}());
+	else {
+		this.options = wrap(this.prime);
+	}
+}.call(this));
