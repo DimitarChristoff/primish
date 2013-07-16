@@ -24,7 +24,15 @@ You are still advised to use Prime but in case you care, here is what you get wi
 - `.setOptions()` - shallow merging of object with `this.options`
 - support for emitter events via `onEventname` -> `this.on('eventname')` like in MooTools 1.x
 
-Use at your own risk, examples in spec. Documentation in /dev/null
+### browser support
+
+The main driving force behind primish is to change prime to work in a browser out of the box as well as under nodejs.
+This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don't have
+an AMD loader and not under NodeJS / browserify, it will export `window.prime`, `window.emitter` and `window.options`,
+so be careful. Another goal has been to bring as much MooTools 1.x sugar into classes as possible.
+
+Use at your own risk, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
+Most examples in the docs are runnable, just edit the code and press `run this`, then look at your console.
 
 ## Creating a Class
 

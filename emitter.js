@@ -108,8 +108,11 @@
 		// referenced as the "underscore" module
 		define(['./prime'], wrap);
 	}
-	else {
+	else if (typeof module !== 'undefined' && module.exports){
+		// CommonJS module is defined
 		module.exports = wrap(require('./prime'));
 	}
-
-}());
+	else {
+		this.emitter = wrap(this.prime);
+	}
+}.call(this));

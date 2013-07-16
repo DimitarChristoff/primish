@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Class example, RequireJS</title>
+</head>
+<body>
+Look at your console. This is a pure browser implementation
+
+<script type="text/javascript" src="../prime.js"></script>
+<script type="text/javascript">
+	(function(){
+		'use strict';
+
+		var Human = prime({
+			constructor: function(name){
+				this.dob = (new Date()).getTime();
+				this.name = name || 'unknown';
+			},
+
+			getAge: function(){
+				return (new Date()).getTime() - this.dob;
+			},
+
+			getName: function(){
+				return this.name;
+			}
+
+		});
+
+		var Ninja = prime({
+
+			extend: Human,
+
+			constructor: function(name, rank){
+				this.parent('constructor', name);
+				this.setRank(rank || 'Academy');
+			},
+
+			getRank: function(){
+				return this.rank;
+			},
+
+			setRank: function(rank){
+				this.rank = rank;
+			}
+		});
+
+		// instantiation.
+		var bob = new Human('Bob');
+		var chuck = new Ninja('Chuck Norris', 'Sennin');
+
+		setTimeout(function(){
+			console.log(bob.getName(), bob.getAge());
+			console.log(chuck.getName(), chuck.getAge(), chuck.getRank());
+		}, 1000);
+
+	}());
+
+</script>
+</body>
+</html>

@@ -2,8 +2,8 @@
  primish 0.1.0
  - prototypish inheritance
 
- browser-friendly classes, based upon prime by Valerio Pioretti
- */
+ browser-friendly classes, based upon prime by Valerio Pioretti / MooTools, MIT
+*/
 ;(function(){
 	'use strict';
 
@@ -195,7 +195,6 @@
 	prime.create = create;
 	prime.define = defineProperty;
 
-
 	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 		// define as an anonymous module so, through path mapping, it can be
 		// referenced as the "underscore" module
@@ -203,8 +202,11 @@
 			return prime;
 		});
 	}
-	else {
+	else if (typeof module !== 'undefined' && module.exports){
+		// CommonJS module is defined
 		module.exports = prime;
 	}
-
-}());
+	else {
+		this.prime = prime;
+	}
+}.call(this));

@@ -1,4 +1,10 @@
-(function(){
+/*
+ primish 0.1.0
+ - prototypish inheritance
+
+ emitter for primish, standalone mediator or mixin
+ */
+;(function(){
 	'use strict';
 
 	var wrap = function(prime){
@@ -97,13 +103,16 @@
 		return emitter;
 	}; // wrap
 
-	if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 		// define as an anonymous module so, through path mapping, it can be
 		// referenced as the "underscore" module
 		define(['./prime'], wrap);
 	}
-	else {
+	else if (typeof module !== 'undefined' && module.exports){
+		// CommonJS module is defined
 		module.exports = wrap(require('./prime'));
 	}
-
-}());
+	else {
+		this.emitter = wrap(this.prime);
+	}
+}.call(this));
