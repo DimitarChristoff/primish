@@ -22,6 +22,7 @@ module.exports = function(grunt){
 					images: 'example/images',
 					logo: 'images/primish.png',
 					twitter: 'D_mitar',
+					travis: 'http://travis-ci.org/DimitarChristoff/primish',
 					github: 'https://github.com/DimitarChristoff/primish.git'
 				},
 				files: {
