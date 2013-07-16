@@ -465,6 +465,14 @@ in your Class instances (unlike when using <a href="#extend">extend</a>)</div></
 
     var h = new Human();
     h.trigger(&#39;hi&#39;).trigger(&#39;hi&#39;); // should only console.log once
+
+    // or simply use the :once pseudo
+    h.on(&#39;bye:once&#39;, function(){
+        console.log(&#39;bye&#39;);
+    });
+
+    h.trigger(&#39;bye&#39;);
+    h.trigger(&#39;bye&#39;); // won&#39;t do anything
 });</code></pre>
 <p>There is also syntactic sugar available for adding more than one event to the same callback:</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">var cb = function(){

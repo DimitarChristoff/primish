@@ -494,7 +494,16 @@ require(['prime/prime', 'prime/emitter'], function(prime, emitter){
 
 	var h = new Human();
 	h.trigger('hi').trigger('hi'); // should only console.log once
+
+	// or simply use the :once pseudo
+	h.on('bye:once', function(){
+		console.log('bye');
+	});
+
+	h.trigger('bye');
+	h.trigger('bye'); // won't do anything
 });
+
 ```
 
 There is also syntactic sugar available for adding more than one event to the same callback:
