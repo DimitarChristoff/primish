@@ -36,11 +36,9 @@ Most examples in the docs are runnable, just edit the code and press `run this`,
 
 ## Testimonials
 
-<blockquote>
-[kentaromiura](https://github.com/kentaromiura), mootools-core and mootools-prime developer says
+[kentaromiura](https://github.com/kentaromiura), mootools-core and mootools-prime developer said:
 
-_I guess that when you said I'll go and make my own version of prime with, blackjack and hookers you really meant it_
-</blockquote>
+> _I guess that when you said I'll go and make my own version of prime with, blackjack and hookers you really meant it_
 
 ![our own](http://i0.kym-cdn.com/photos/images/newsfeed/000/335/042/72f.png)
 
