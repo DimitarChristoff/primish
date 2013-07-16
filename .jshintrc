@@ -1,7 +1,6 @@
 {
 	"node": false,
 	"browser": true,
-	"es5": true,
 	"esnext": false,
 	"evil": false,
 	"bitwise": false,
@@ -10,7 +9,7 @@
 	"eqnull": true,
 	"immed": true,
 	"latedef": true,
-	"newcap": true,
+	"newcap": false,
 	"noarg": true,
 	"undef": true,
 	"unused": true,
@@ -19,7 +18,7 @@
 	"trailing": true,
 	"smarttabs": true,
 	"boss": true,
-	"expr": false,
+	"expr": true,
 	"globalstrict": false,
 	"quotmark": "single",
 	"globals": {

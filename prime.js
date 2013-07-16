@@ -1,4 +1,10 @@
-(function(){
+/*
+ primish 0.1.0
+ - prototypish inheritance
+
+ browser-friendly classes, based upon prime by Valerio Pioretti
+ */
+;(function(){
 	'use strict';
 
 	// hasOwnProperty shortcut
@@ -18,7 +24,6 @@
 			proto = Object.prototype;
 
 		each = function(object, method, context){
-			/*jshint boss:true */
 			var key,
 				i,
 				value;
@@ -31,7 +36,6 @@
 				if ((value !== proto[key] || has(object, key)) && method.call(context, value, key, object) === false)
 					break;
 			}
-			/*jshint boss:false */
 			return object;
 		};
 	}
@@ -68,7 +72,6 @@
 
 	// the mixin is via Object.defineProperty for Object.keys (each)
 	var implement = function(proto){
-		/*jshint expr:true */
 		if (has(proto, 'implement')){
 			// mixins: mutator key.
 			// expects [array] or single [function constructor]
@@ -79,7 +82,6 @@
 
 			delete proto.implement;
 		}
-		/*jshint expr:false */
 
 		// copies properties from other classes
 		each(proto, function(value, key){
@@ -194,7 +196,7 @@
 	prime.define = defineProperty;
 
 
-	if (typeof define == 'function' && typeof define.amd == 'object' && define.amd) {
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
 		// define as an anonymous module so, through path mapping, it can be
 		// referenced as the "underscore" module
 		define(function() {
