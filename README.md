@@ -607,3 +607,25 @@ $ cd dist
 $ python -m SimpleHTTPServer
 # go to http://localhost:8000
 ```
+
+## npm usage
+
+You can install it via npm by simply doing:
+
+```
+npm install primish --save
+```
+
+Then to access it in a nodejs script:
+
+```javascript
+var prime = require('primish'),
+	emitter = require('primish/emitter');
+
+var foo = prime({
+
+	implement: emitter
+
+}); // etc.
+
+```

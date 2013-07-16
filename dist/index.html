@@ -21,7 +21,7 @@
 		</div>
 		<div class="separator"></div>
 	
-	<ul id="sections"><li class="l2"><a href="#changes-from-upstream">Changes from upstream</a><ul><li class="l3"><a href="#changes-from-upstream/prime-changes">prime changes</a></li><li class="l3"><a href="#changes-from-upstream/emitter-changes">emitter changes</a></li><li class="l3"><a href="#changes-from-upstream/options">options</a></li></ul></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li><li class="l3"><a href="#creating-a-class/mixins">mixins</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li></ul>
+	<ul id="sections"><li class="l2"><a href="#changes-from-upstream">Changes from upstream</a><ul><li class="l3"><a href="#changes-from-upstream/prime-changes">prime changes</a></li><li class="l3"><a href="#changes-from-upstream/emitter-changes">emitter changes</a></li><li class="l3"><a href="#changes-from-upstream/options">options</a></li></ul></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li><li class="l3"><a href="#creating-a-class/mixins">mixins</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li></ul>
 	<div class="separator"></div>
 	
 		<div class="extra" id="github">
@@ -556,6 +556,18 @@ $ grunt
 $ cd dist
 $ python -m SimpleHTTPServer
 # go to http://localhost:8000</code></pre>
+<h2 id="npm-usage">npm usage</h2>
+<p>You can install it via npm by simply doing:</p>
+<pre class="prettyprint linenums"><code>npm install primish --save</code></pre>
+<p>Then to access it in a nodejs script:</p>
+<pre class="prettyprint linenums"><code class="lang-javascript">var prime = require(&#39;primish&#39;),
+    emitter = require(&#39;primish/emitter&#39;);
+
+var foo = prime({
+
+    implement: emitter
+
+}); // etc.</code></pre>
 
 	
 </div>
