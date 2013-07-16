@@ -34,7 +34,7 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 Use at your own risk, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
 Most examples in the docs are runnable, just edit the code and press `run this`, then look at your console.
 
-### Testimonials
+## Testimonials
 
 <blockquote>
 [kentaromiura](https://github.com/kentaromiura), mootools-core and mootools-prime developer says
