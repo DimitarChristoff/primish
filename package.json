@@ -9,7 +9,7 @@
   },
   "repository": "https://github.com/DimitarChristoff/primish",
   "license": "MIT",
-  "private": "true",
+  "private": "false",
   "devDependencies": {
     "jasmine-node": "~1.7.0",
     "grunt": "~0.4.1",
