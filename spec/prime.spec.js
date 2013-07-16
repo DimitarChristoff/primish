@@ -1,6 +1,6 @@
 'use strict';
 
-var prime = require('../src/prime');
+var prime = require('../prime');
 
 // core functionality of prime
 

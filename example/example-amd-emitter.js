@@ -1,8 +1,8 @@
 define(function(require){
 	'use strict';
 
-	var prime = require('../src/prime'),
-		emitter = require('../src/emitter');
+	var prime = require('../prime'),
+		emitter = require('../emitter');
 
 
 	var Human = prime({

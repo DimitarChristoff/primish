@@ -1,7 +1,7 @@
 define(function(require){
 	'use strict';
 
-	var prime = require('../src/prime'),
+	var prime = require('../prime'),
 		Human = prime({
 
 			constructor: function(name){

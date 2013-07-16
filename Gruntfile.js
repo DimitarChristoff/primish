@@ -33,7 +33,7 @@ module.exports = function(grunt){
 					doctor: {
 						files: [{
 							dest: '<%= output%>/js/prime/',
-							src: ['src/*.js'],
+							src: ['*.js'],
 							expand: true,
 							flatten: true,
 							filter: function(name){

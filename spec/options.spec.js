@@ -1,8 +1,8 @@
 'use strict';
 
-var prime = require('../src/prime'),
-	emitter = require('../src/emitter'),
-	options = require('../src/options');
+var prime = require('../prime'),
+	emitter = require('../emitter'),
+	options = require('../options');
 
 
 describe('Class with the options mixin', function(){
