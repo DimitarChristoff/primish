@@ -18,7 +18,7 @@ module.exports = function(grunt){
 				options: {
 					source: 'README.md',
 					output: '<%= output%>',
-					title: 'primish documentation',
+					title: 'primish - a mootools prime fork for the browser',
 					images: 'example/images',
 					logo: 'images/primish.png',
 					twitter: 'D_mitar',

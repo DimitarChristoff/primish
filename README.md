@@ -651,4 +651,6 @@ Most examples in the docs are runnable, just edit the code and press `run this`,
 
 You are still advised to use `prime`, `primish` will be kept reasonably upto date but it will not be merging with the prime remote. Changes to prime itself may be re-implemented and pushed through primish if they don't break any existing functionality.
 
-**LICENSE** Use as you deem fit under the original prime MIT license. Primish brings little on top of the work of the MooTools team. The documentation and examples are not covered by the license and may need to be changed.
+## License
+
+Use as you deem fit under the original [MIT license](https://github.com/mootools/prime/blob/master/package.json#L23) for prime. Primish brings little on top of the work of the MooTools team. The documentation and examples are not covered by the license and may need to be changed.
