@@ -3,7 +3,7 @@ primish
 
 A prime derivative that went beyond repair. Initially a fork of [MooTools prime](https://github.com/mootools/prime/), now with a lot of sugar. 
 
-You are still advised to use Prime but in case you care, here is what you get with primish:
+Why fork prime in the first place? Well... prime is very good. But it is written as a CommonJS module and it needs a fair amount of packaging and bundling of plugins and behaviours in order to make it work in a browser. Having to repeat these tasks for every project became repetitive and tedious after a while, hence this mini release. It does not only do module packaging, there are some small changes in code.
 
 ## Changes from upstream
 
@@ -27,12 +27,9 @@ You are still advised to use Prime but in case you care, here is what you get wi
 ### browser support
 
 The main driving force behind primish is to change prime to work in a browser out of the box as well as under nodejs.
-This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don't have
-an AMD loader and not under NodeJS / browserify, it will export `window.prime`, `window.emitter` and `window.options`,
+This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don't have an AMD loader and not under NodeJS / browserify, it will export `window.prime`, `window.emitter` and `window.options`,
 so be careful. Another goal has been to bring as much MooTools 1.x sugar into classes as possible.
 
-Use at your own risk, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
-Most examples in the docs are runnable, just edit the code and press `run this`, then look at your console.
 
 ## Testimonials
 
@@ -246,7 +243,7 @@ require(['prime/prime'], function(prime){
 });
 ```
 Changes to the parent Class are also reflected in the child Class by inheritance (unless the child has a local
-implementation). This differs from when you use the [mixin](#mixin) directives, which copies instead.
+implementation). This differs from when you use the [implement](#creating-a-class/implement) directives, which copies instead.
 
 ```javascript
 // continued from above
@@ -262,64 +259,7 @@ square.width; // 4;
 square.height; // 4
 ```
 
-### parent
-
-When [extending a Class](#extend), you can access methods from the super via the `.parent()` method. It expects at least
-1 argument - the method name as `String`. This is synthactic sugar for saying:
-
- `this.constructor.prototype.methodname.apply(this, [arguments])`, where methodname is the method passed as string.
-
-Here is a more comprehensive example:
-
-```ace
-require(['prime/prime'], function(prime){
-	// this example won't work w/o jQuery and ECMA5
-	// assume this.$element is a jquery wrapped el.
-
-	var Widget = prime({
-
-		attachEvents: function(){
-			this.$element.on('click', this.handleclick.bind(this));
-		},
-		handleClick: function(){
-
-		},
-		setTitle: function(title){
-			this.$element.find('.title').text(title);
-		}
-
-	});
-
-	var WeatherWidget = prime({
-
-		extend: Widget,
-
-		attachEvents: function(){
-			this.parent('attachEvents'); // call it on super Widget
-			// do more.
-			this.$element.find('input').on('blur', this.validateInput.bind(this));
-		},
-		validateInput: function(event){
-
-		}
-
-	});
-
-	// example with shifting arguments
-	var NewsWidget = prime({
-
-		extend: Widget,
-
-		setTitle: function(text){
-			this.$element.find('.sub-heading').addClass('active');
-			this.parent('setTitle', text); // passes original arg to parent.
-		}
-
-	});
-});
-```
-
-### mixins
+### implement
 
 The special key `implement` is used to tell prime which other Objects' properties are to be `copied` into your own Class
 definition. Mixins do not work via inheritance, they create a local instance of the properties.
@@ -390,7 +330,67 @@ var myClass = prime({}).implement(new OtherClass);
 
 <div class="alert">Note: When a mixin is implemented, the mixin Class is instantiated (via `new`) and the methods are copied from
 the instance, not the prototype. Changing the mixin prototype afterwards will not automatically make the changes available
-in your Class instances (unlike when using [extend](#extend))
+in your Class instances (unlike when using [extend](#creating-a-class/extend))
+
+
+### parent
+
+When [extending a Class](#extend), you can access methods from the super via the `.parent()` method. It expects at least
+1 argument - the method name as `String`. This is synthactic sugar for saying:
+
+`this.constructor.prototype.methodname.apply(this, [arguments])`, where methodname is the method passed as string.
+
+The parent method is borrowed from Arian's prime-util repo.
+
+Here is a more comprehensive example:
+
+```ace
+require(['prime/prime'], function(prime){
+	// this example won't work w/o jQuery and ECMA5
+	// assume this.$element is a jquery wrapped el.
+
+	var Widget = prime({
+
+		attachEvents: function(){
+			this.$element.on('click', this.handleclick.bind(this));
+		},
+		handleClick: function(){
+
+		},
+		setTitle: function(title){
+			this.$element.find('.title').text(title);
+		}
+
+	});
+
+	var WeatherWidget = prime({
+
+		extend: Widget,
+
+		attachEvents: function(){
+			this.parent('attachEvents'); // call it on super Widget
+			// do more.
+			this.$element.find('input').on('blur', this.validateInput.bind(this));
+		},
+		validateInput: function(event){
+
+		}
+
+	});
+
+	// example with shifting arguments
+	var NewsWidget = prime({
+
+		extend: Widget,
+
+		setTitle: function(text){
+			this.$element.find('.sub-heading').addClass('active');
+			this.parent('setTitle', text); // passes original arg to parent.
+		}
+
+	});
+});
+```
 
 ## Define
 
@@ -435,7 +435,7 @@ require(['prime/prime'], function(prime){
 
 ### emitter
 
-The Emitter class can work either as a [mixin](#mixins) or as a standalone Class instance. It provides any Class that uses it with 3 methods it can call:
+The Emitter class can work either as a [mixin](#creating-a-class/implement) or as a standalone Class instance. It provides any Class that uses it with 3 methods it can call:
 
 - `.on(event, callback)` - subscribes to `String(event)` and runs `callback` when fired.
 - `.off(event, callback)` - removes specific subscription to `String(event)` by exact reference to `callback`. Removing events requires you to be able to pass on the original bound callback.
@@ -645,3 +645,10 @@ var foo = prime({
 }); // etc.
 
 ```
+
+Use at your own risk, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
+Most examples in the docs are runnable, just edit the code and press `run this`, then look at your console.
+
+You are still advised to use `prime`, `primish` will be kept reasonably upto date but it will not be merging with the prime remote. Changes to prime itself may be re-implemented and pushed through primish if they don't break any existing functionality.
+
+**LICENSE** Use as you deem fit under the original prime MIT license. Primish brings little on top of the work of the MooTools team. The documentation and examples are not covered by the license and may need to be changed.
