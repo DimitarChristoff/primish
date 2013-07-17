@@ -21,7 +21,7 @@
 		</div>
 		<div class="separator"></div>
 	
-	<ul id="sections"><li class="l2"><a href="#changes-from-upstream">Changes from upstream</a><ul><li class="l3"><a href="#changes-from-upstream/prime-changes">prime changes</a></li><li class="l3"><a href="#changes-from-upstream/emitter-changes">emitter changes</a></li><li class="l3"><a href="#changes-from-upstream/options">options</a></li><li class="l3"><a href="#changes-from-upstream/browser-support">browser support</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li><li class="l3"><a href="#creating-a-class/mixins">mixins</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li></ul>
+	<ul id="sections"><li class="l2"><a href="#changes-from-upstream">Changes from upstream</a><ul><li class="l3"><a href="#changes-from-upstream/prime-changes">prime changes</a></li><li class="l3"><a href="#changes-from-upstream/emitter-changes">emitter changes</a></li><li class="l3"><a href="#changes-from-upstream/options">options</a></li><li class="l3"><a href="#changes-from-upstream/browser-support">browser support</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/implement">implement</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li></ul>
 	<div class="separator"></div>
 	
 		<div class="extra" id="github">
@@ -46,7 +46,7 @@
 <div id="content" class="container">
 	<h1>primish</h1>
 <p>A prime derivative that went beyond repair. Initially a fork of <a href="https://github.com/mootools/prime/">MooTools prime</a>, now with a lot of sugar. </p>
-<p>You are still advised to use Prime but in case you care, here is what you get with primish:</p>
+<p>Why fork prime in the first place? Well... prime is very good. But it is written as a CommonJS module and it needs a fair amount of packaging and bundling of plugins and behaviours in order to make it work in a browser. Having to repeat these tasks for every project became repetitive and tedious after a while, hence this mini release. It does not only do module packaging, there are some small changes in code.</p>
 <h2 id="changes-from-upstream">Changes from upstream</h2>
 <h3 id="changes-from-upstream/prime-changes">prime changes</h3>
 <ul>
@@ -67,11 +67,8 @@
 </ul>
 <h3 id="changes-from-upstream/browser-support">browser support</h3>
 <p>The main driving force behind primish is to change prime to work in a browser out of the box as well as under nodejs.
-This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don&#39;t have
-an AMD loader and not under NodeJS / browserify, it will export <code>window.prime</code>, <code>window.emitter</code> and <code>window.options</code>,
+This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don&#39;t have an AMD loader and not under NodeJS / browserify, it will export <code>window.prime</code>, <code>window.emitter</code> and <code>window.options</code>,
 so be careful. Another goal has been to bring as much MooTools 1.x sugar into classes as possible.</p>
-<p>Use at your own risk, examples in <code>./examples/</code> and also look at the <code>spec</code> folder (jasmine-node test runner).
-Most examples in the docs are runnable, just edit the code and press <code>run this</code>, then look at your console.</p>
 <h2 id="testimonials">Testimonials</h2>
 <p><a href="https://github.com/kentaromiura">kentaromiura</a>, mootools-core and mootools-prime developer said:</p>
 <blockquote>
@@ -257,7 +254,7 @@ any of its static properties and methods via the scope chain.</p>
     console.log(square.squareRoot()); // from parent proto of Rectangle, 25
 });</code></pre>
 <p>Changes to the parent Class are also reflected in the child Class by inheritance (unless the child has a local
-implementation). This differs from when you use the <a href="#mixin">mixin</a> directives, which copies instead.</p>
+implementation). This differs from when you use the <a href="#creating-a-class/implement">implement</a> directives, which copies instead.</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">// continued from above
 Rectangle.prototype.shrink = function(){
     this.width--;
@@ -269,57 +266,7 @@ Rectangle.prototype.shrink = function(){
 square.setSide(5).shrink();
 square.width; // 4;
 square.height; // 4</code></pre>
-<h3 id="creating-a-class/parent">parent</h3>
-<p>When <a href="#extend">extending a Class</a>, you can access methods from the super via the <code>.parent()</code> method. It expects at least
-1 argument - the method name as <code>String</code>. This is synthactic sugar for saying:</p>
-<p> <code>this.constructor.prototype.methodname.apply(this, [arguments])</code>, where methodname is the method passed as string.</p>
-<p>Here is a more comprehensive example:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;prime/prime&#39;], function(prime){
-    // this example won&#39;t work w/o jQuery and ECMA5
-    // assume this.$element is a jquery wrapped el.
-
-    var Widget = prime({
-
-        attachEvents: function(){
-            this.$element.on(&#39;click&#39;, this.handleclick.bind(this));
-        },
-        handleClick: function(){
-
-        },
-        setTitle: function(title){
-            this.$element.find(&#39;.title&#39;).text(title);
-        }
-
-    });
-
-    var WeatherWidget = prime({
-
-        extend: Widget,
-
-        attachEvents: function(){
-            this.parent(&#39;attachEvents&#39;); // call it on super Widget
-            // do more.
-            this.$element.find(&#39;input&#39;).on(&#39;blur&#39;, this.validateInput.bind(this));
-        },
-        validateInput: function(event){
-
-        }
-
-    });
-
-    // example with shifting arguments
-    var NewsWidget = prime({
-
-        extend: Widget,
-
-        setTitle: function(text){
-            this.$element.find(&#39;.sub-heading&#39;).addClass(&#39;active&#39;);
-            this.parent(&#39;setTitle&#39;, text); // passes original arg to parent.
-        }
-
-    });
-});</code></pre>
-<h3 id="creating-a-class/mixins">mixins</h3>
+<h3 id="creating-a-class/implement">implement</h3>
 <p>The special key <code>implement</code> is used to tell prime which other Objects&#39; properties are to be <code>copied</code> into your own Class
 definition. Mixins do not work via inheritance, they create a local instance of the properties.</p>
 <p>When used as a property, <code>implement</code> accepts either a single Class or an array of Classes to implement.</p>
@@ -380,7 +327,58 @@ instanceofMyClass.implement(new OtherClass2()).implement(new OtherClass3());
 var myClass = prime({}).implement(new OtherClass);</code></pre>
 <p><div class="alert">Note: When a mixin is implemented, the mixin Class is instantiated (via <code>new</code>) and the methods are copied from
 the instance, not the prototype. Changing the mixin prototype afterwards will not automatically make the changes available
-in your Class instances (unlike when using <a href="#extend">extend</a>)</div></p>
+in your Class instances (unlike when using <a href="#creating-a-class/extend">extend</a>)</div></p>
+<h3 id="creating-a-class/parent">parent</h3>
+<p>When <a href="#extend">extending a Class</a>, you can access methods from the super via the <code>.parent()</code> method. It expects at least
+1 argument - the method name as <code>String</code>. This is synthactic sugar for saying:</p>
+<p><code>this.constructor.prototype.methodname.apply(this, [arguments])</code>, where methodname is the method passed as string.</p>
+<p>The parent method is borrowed from Arian&#39;s prime-util repo.</p>
+<p>Here is a more comprehensive example:</p>
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;prime/prime&#39;], function(prime){
+    // this example won&#39;t work w/o jQuery and ECMA5
+    // assume this.$element is a jquery wrapped el.
+
+    var Widget = prime({
+
+        attachEvents: function(){
+            this.$element.on(&#39;click&#39;, this.handleclick.bind(this));
+        },
+        handleClick: function(){
+
+        },
+        setTitle: function(title){
+            this.$element.find(&#39;.title&#39;).text(title);
+        }
+
+    });
+
+    var WeatherWidget = prime({
+
+        extend: Widget,
+
+        attachEvents: function(){
+            this.parent(&#39;attachEvents&#39;); // call it on super Widget
+            // do more.
+            this.$element.find(&#39;input&#39;).on(&#39;blur&#39;, this.validateInput.bind(this));
+        },
+        validateInput: function(event){
+
+        }
+
+    });
+
+    // example with shifting arguments
+    var NewsWidget = prime({
+
+        extend: Widget,
+
+        setTitle: function(text){
+            this.$element.find(&#39;.sub-heading&#39;).addClass(&#39;active&#39;);
+            this.parent(&#39;setTitle&#39;, text); // passes original arg to parent.
+        }
+
+    });
+});</code></pre>
 <h2 id="define">Define</h2>
 <p>Define is a micro polyfill to <code>Object.defineProperty</code> - see <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN</a>. It works in conjunction with <code>Object.getOwnPropertyDescriptor</code>, which is also shimmed for older browsers.</p>
 <p>This allows you to have read-only properties of objects, or private getters/setters. Example use</p>
@@ -416,7 +414,7 @@ in your Class instances (unlike when using <a href="#extend">extend</a>)</div></
 });</code></pre>
 <h2 id="plugins">Plugins</h2>
 <h3 id="plugins/emitter">emitter</h3>
-<p>The Emitter class can work either as a <a href="#mixins">mixin</a> or as a standalone Class instance. It provides any Class that uses it with 3 methods it can call:</p>
+<p>The Emitter class can work either as a <a href="#creating-a-class/implement">mixin</a> or as a standalone Class instance. It provides any Class that uses it with 3 methods it can call:</p>
 <ul>
 <li><code>.on(event, callback)</code> - subscribes to <code>String(event)</code> and runs <code>callback</code> when fired.</li>
 <li><code>.off(event, callback)</code> - removes specific subscription to <code>String(event)</code> by exact reference to <code>callback</code>. Removing events requires you to be able to pass on the original bound callback.</li>
@@ -587,6 +585,10 @@ var foo = prime({
     implement: emitter
 
 }); // etc.</code></pre>
+<p>Use at your own risk, examples in <code>./examples/</code> and also look at the <code>spec</code> folder (jasmine-node test runner).
+Most examples in the docs are runnable, just edit the code and press <code>run this</code>, then look at your console.</p>
+<p>You are still advised to use <code>prime</code>, <code>primish</code> will be kept reasonably upto date but it will not be merging with the prime remote. Changes to prime itself may be re-implemented and pushed through primish if they don&#39;t break any existing functionality.</p>
+<p><strong>LICENSE</strong> Use as you deem fit under the original prime MIT license. Primish brings little on top of the work of the MooTools team. The documentation and examples are not covered by the license and may need to be changed.</p>
 
 	
 </div>
