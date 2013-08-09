@@ -24,7 +24,7 @@
 
 		var hideProperty = function(obj, prop){
 			// listeners not to be enumerable where supported
-			return obj[prop] = {}, prime.define(obj, prop, {enumerable: false}), obj[prop];
+			return obj[prop] = {}, prime.define(obj, prop, {enumerable: false, value:obj[prop]}), obj[prop];
 		};
 
 		var emitter = prime({
