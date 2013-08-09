@@ -47,7 +47,7 @@ define(function(require){
 
 	// example subscribe
 	bob.on('done:once', function(){
-		console.info('done event fired for', this.getName());
+		console.log('done event fired for', this.getName());
 	});
 
 	setTimeout(function(){

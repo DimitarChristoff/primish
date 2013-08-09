@@ -129,7 +129,7 @@
 		var toString = Object.prototype.toString,
 			objString = '[object Object]',
 			isObject = function(obj){
-				return toString.call(obj) === objString;
+				return toString.call(obj) === objString && obj != null;
 			},
 			k,
 			callback = function(key){
