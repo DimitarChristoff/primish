@@ -1,6 +1,6 @@
 {
   "name": "primish",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A portable Class implementation in javascript, forked from MooTools Prime",
   "main": "prime.js",
   "scripts": {
