@@ -14,11 +14,12 @@
 
 		var pseudoEvents = {
 			once: function(eventName, fn){
-				var self = this;
-				return function one(){
+				var self = this,
+					wrapped = function(){
 					fn.apply(this, arguments);
-					self.off(eventName, one);
+					self.off(eventName, wrapped);
 				};
+				return wrapped;
 			}
 		};
 
