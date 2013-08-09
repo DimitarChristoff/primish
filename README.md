@@ -9,12 +9,16 @@ Why fork prime in the first place? Well... prime is very good. But it is written
 
 ### prime changes
 
+- forked from before the new prime [types and object mixins](https://github.com/mootools/prime/blob/master/index.js#L6-L11).
 - `.parent()`
-- `.implement()` and `implement` mutator:
+- `.implement()` and `implement` mutator, like mootools. not `mixin`
+- `extend`, not `inherits`
 - `prime.merge()` shallow Object merging
 
 ### emitter changes
 
+- `.emit` is actually `.trigger`, so it's not an `emitter` as such :)
+- no support for defered async events (see [this](https://github.com/mootools/prime/blob/master/emitter.js#L50-L65))
 - support for event stacking like `.on('foo bar baz', function(){});`
 - support for event pseudos like `.on('foo:once', function(){});`
 - `emitter.definePseudo()` to allow custom pseudo events

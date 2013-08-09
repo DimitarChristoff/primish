@@ -84,11 +84,12 @@
 				var listeners = this._listeners,
 					events,
 					k,
-					args;
+					args = slice.call(arguments, 1),
+					copy = {};
 
 				if (listeners && (events = listeners[event])){
-					args = (arguments.length > 1) ? slice.call(arguments, 1) : [];
-					for (k in events) events[k].apply(this, args);
+					for (k in events) copy[k] = events[k];
+					for (k in copy) copy[k].apply(this, args);
 				}
 
 				return this;
