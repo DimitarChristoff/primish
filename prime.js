@@ -56,9 +56,8 @@
 		defineProperty = Object.defineProperty;
 
 	try {
-		var obj = { a: 1 };
-		getOwnPropertyDescriptor(obj, 'a');
-		defineProperty(obj, 'a', { value: 2 });
+		defineProperty({}, '~', {});
+		getOwnPropertyDescriptor({}, '~');
 	} catch (e) {
 		// no native support, fix it.
 		getOwnPropertyDescriptor = function(object, key){
@@ -69,6 +68,8 @@
 			return object;
 		};
 	}
+
+	var escapeKeys = /^constructor|extend|define$/;
 
 	// the mixin is via Object.defineProperty for Object.keys (each)
 	var implement = function(proto){
@@ -85,7 +86,7 @@
 
 		// copies properties from other classes
 		each(proto, function(value, key){
-			if (key !== 'constructor' && key !== 'define' && key !== 'extend'){
+			if (!key.match(escapeKeys)){
 				this.define(key, getOwnPropertyDescriptor(proto, key) || {
 					writable: true,
 					enumerable: true,
@@ -159,6 +160,8 @@
 		} : function(){
 		};
 
+		delete proto.constructor;
+
 		if (superclass){
 			var superproto = superclass.prototype;
 			// inherit from superclass
@@ -168,6 +171,7 @@
 			// because it's the shortest possible absolute reference
 			constructor.parent = superproto;
 			cproto.constructor = constructor;
+			delete proto.extend;
 		}
 
 		// ability to call super via .parent
