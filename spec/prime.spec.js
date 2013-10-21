@@ -48,6 +48,17 @@ describe('Calling `constructor` automatically', function(){
 
 });
 
+describe('Immediate invocation of constructor', function(){
+
+	it('Should have a context', function(){
+		new prime({
+			constructor: function(){
+				expect(this).not.toBeUndefined();
+			}
+		})();
+	});
+});
+
 describe('`extend` classes', function(){
 
 	var Human, Student,
