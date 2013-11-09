@@ -1,9 +1,7 @@
-/*
- primish 0.1.0
- - prototypish inheritance
-
- options mixin that works with emitter also
- */
+/**
+ * @module primish/options
+ * @description setOptions mixin for primish
+ **/
 ;(function(){
 	'use strict';
 
@@ -40,13 +38,10 @@
 		});
 	}; // wrap
 
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		// define as an anonymous module so, through path mapping, it can be
-		// referenced as the "underscore" module
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd){
 		define(['./prime'], wrap);
 	}
 	else if (typeof module !== 'undefined' && module.exports){
-		// CommonJS module is defined
 		module.exports = wrap(require('./prime'));
 	}
 	else {

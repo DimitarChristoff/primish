@@ -1,9 +1,8 @@
-/*
- primish 0.1.0
- - prototypish inheritance
-
- browser-friendly classes, based upon prime by Valerio Pioretti / MooTools, MIT
-*/
+/**
+ * @module primish 0.1.6 - prototypish inheritance
+ * @description browser-friendly or node-js Class sugar
+ * based upon prime by Valerio Pioretti / MooTools, MIT
+**/
 ;(function(){
 	'use strict';
 
@@ -199,10 +198,10 @@
 	prime.create = create;
 	prime.define = defineProperty;
 
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd){
 		// define as an anonymous module so, through path mapping, it can be
 		// referenced as the "underscore" module
-		define(function() {
+		define(function(){
 			return prime;
 		});
 	}
