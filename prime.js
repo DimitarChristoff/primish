@@ -94,6 +94,7 @@
 		// copies properties from other classes
 		each(proto, function(value, key){
 			if (!key.match(escapeKeys)){
+				isObject(value) && (proto[key] = clone(value));
 				this.define(key, getOwnPropertyDescriptor(proto, key) || {
 					writable: true,
 					enumerable: true,
@@ -174,7 +175,7 @@
 			cproto.constructor = constructor;
 
 			// merge objects
-			isObject(proto.options) && isObject(superproto.options) && (proto.options = merge(this.options, proto.options));
+			isObject(proto.options) && isObject(superproto.options) && (proto.options = merge(clone(superproto.options), proto.options));
 
 			delete proto.extend;
 		}

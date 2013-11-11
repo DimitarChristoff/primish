@@ -62,13 +62,14 @@ describe('Immediate invocation of constructor', function(){
 describe('`extend` classes', function(){
 
 	var Human, Student,
-		human, student;
+		human, student,
+		opt = {
+			age: 30
+		};
 
 	Human = prime({
 
-		options: {
-			age: 30
-		},
+		options: opt,
 
 		test: {
 			foo: 'bar'
@@ -131,9 +132,10 @@ describe('`extend` classes', function(){
 	});
 
 	it('Should recursively merge objects from protos', function(){
-		expect(student.options.age).toEqual(human.constructor.prototype.options.age);
-		expect(student.options.age).toEqual(human.constructor.prototype.options.age);
-		expect(student.options.school).toEqual(student.constructor.prototype.options.school);
+		expect(human.options.age).not.toEqual(student.options.age);
+		expect(human.options.age).toEqual(Human.prototype.options.age);
+		expect(student.options.age).toEqual(student.constructor.prototype.options.age);
+		expect(student.options.school).toEqual(Student.prototype.options.school);
 		expect(student.hasOwnProperty('test')).toBeFalsy();
 		expect(student.test.foo).toEqual(human.constructor.prototype.test.foo);
 	});
@@ -160,7 +162,7 @@ describe('.parent should call method from super prototype', function(){
 		});
 
 		spyOn(obj, 'runme');
-		var a =new A();
+		var a = new A();
 		a.method();
 		expect(obj.runme).not.toHaveBeenCalled();
 	});

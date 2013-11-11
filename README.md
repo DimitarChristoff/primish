@@ -14,6 +14,8 @@ Why fork prime in the first place? Well... prime is very good. But it is written
 - `.implement()` and `implement` mutator, like mootools. not `mixin`
 - `extend`, not `inherits`
 - `prime.merge()` shallow Object merging
+- object keys of constructor object are NOT dereferenced / cloned
+- only `options` key is merged with supers, not other objects
 
 ### emitter changes
 
@@ -263,6 +265,29 @@ square.width; // 4;
 square.height; // 4
 ```
 
+**Warning**: when creating a new sub class, if you have an `options` object in the constructor and the super class also has it,
+it will automatically merge them for you. This is really helpful when using the [options](#plugins/options) mixin:
+
+```javascript
+require(['prime/prime'], function(prime){
+	var a = prime({
+		options: {
+			x: 1,
+			y: 1
+		}
+	});
+
+	var b = prime({
+		extend: a,
+		options: {
+			z: 1
+		}
+	});
+
+	console.log(new b().options);  // {x:1, y:1, z:1}
+});
+```
+
 ### implement
 
 The special key `implement` is used to tell prime which other Objects' properties are to be `copied` into your own Class
@@ -404,33 +429,33 @@ This allows you to have read-only properties of objects, or private getters/sett
 
 ```ace
 require(['prime/prime'], function(prime){
-    var Human = prime({
+	var Human = prime({
 
-        constructor: function(name){
-            this.name = name;
+		constructor: function(name){
+			this.name = name;
 
-            // make name readonly
-            prime.define(this, 'name', {
-                writable: false,
-                enumerable: true
-            });
-        },
+			// make name readonly
+			prime.define(this, 'name', {
+				writable: false,
+				enumerable: true
+			});
+		},
 
-        setName: function(name){
-            this.name = name; // won't work in modern browsers
-        }
+		setName: function(name){
+			this.name = name; // won't work in modern browsers
+		}
 
-    });
+	});
 
-    var Bob = new Human('Bob');
+	var Bob = new Human('Bob');
 
-    Bob.setName('Robert');
+	Bob.setName('Robert');
 
-    Bob.name = 'Rob';
+	Bob.name = 'Rob';
 
-    // should be fine.
-    console.info(Bob.name);
-    console.assert(Bob.name === 'Bob');
+	// should be fine.
+	console.info(Bob.name);
+	console.assert(Bob.name === 'Bob');
 
 });
 ```
