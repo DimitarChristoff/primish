@@ -70,6 +70,10 @@ describe('`extend` classes', function(){
 			age: 30
 		},
 
+		test: {
+			foo: 'bar'
+		},
+
 		live: function(){
 
 		},
@@ -130,6 +134,8 @@ describe('`extend` classes', function(){
 		expect(student.options.age).toEqual(human.constructor.prototype.options.age);
 		expect(student.options.age).toEqual(human.constructor.prototype.options.age);
 		expect(student.options.school).toEqual(student.constructor.prototype.options.school);
+		expect(student.hasOwnProperty('test')).toBeFalsy();
+		expect(student.test.foo).toEqual(human.constructor.prototype.test.foo);
 	});
 
 });

@@ -149,7 +149,6 @@
 		return a;
 	};
 
-
 	// main
 	var prime = function(proto){
 		var superclass = proto.extend;
@@ -175,9 +174,7 @@
 			cproto.constructor = constructor;
 
 			// merge objects
-			each(proto, function(value, key){
-				isObject(this[key]) && (proto[key] = merge(this[key], proto[key]));
-			}, superproto);
+			isObject(proto.options) && isObject(superproto.options) && (proto.options = merge(this.options, proto.options));
 
 			delete proto.extend;
 		}
