@@ -1,9 +1,7 @@
-/*
- primish 0.1.0
- - prototypish inheritance
-
- emitter for primish, standalone mediator or mixin
- */
+/**
+ * @module primish/emitter
+ * @description emitter for primish, standalone mediator or mixin
+ **/
 ;(function(){
 	'use strict';
 
@@ -14,17 +12,18 @@
 
 		var pseudoEvents = {
 			once: function(eventName, fn){
-				var self = this;
-				return function one(){
+				var self = this,
+					wrapped = function(){
 					fn.apply(this, arguments);
-					self.off(eventName, one);
+					self.off(eventName, wrapped);
 				};
+				return wrapped;
 			}
 		};
 
 		var hideProperty = function(obj, prop){
 			// listeners not to be enumerable where supported
-			return obj[prop] = {}, prime.define(obj, prop, {enumerable: false}), obj[prop];
+			return obj[prop] = {}, prime.define(obj, prop, {enumerable: false, value:obj[prop]}), obj[prop];
 		};
 
 		var emitter = prime({
@@ -104,13 +103,10 @@
 		return emitter;
 	}; // wrap
 
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		// define as an anonymous module so, through path mapping, it can be
-		// referenced as the "underscore" module
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd){
 		define(['./prime'], wrap);
 	}
 	else if (typeof module !== 'undefined' && module.exports){
-		// CommonJS module is defined
 		module.exports = wrap(require('./prime'));
 	}
 	else {

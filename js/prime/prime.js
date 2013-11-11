@@ -1,9 +1,8 @@
-/*
- primish 0.1.0
- - prototypish inheritance
-
- browser-friendly classes, based upon prime by Valerio Pioretti / MooTools, MIT
-*/
+/**
+ * @module primish 0.2.0 - prototypish inheritance
+ * @description browser-friendly or node-js Class sugar
+ * based upon prime by Valerio Pioretti / MooTools, MIT
+**/
 ;(function(){
 	'use strict';
 
@@ -51,14 +50,21 @@
 	// slice reference
 	var slice = Array.prototype.slice;
 
+	var isObject = (function(){
+		var toString = Object.prototype.toString,
+			objString = '[object Object]';
+			return function(obj){
+				return toString.call(obj) === objString && obj != null;
+			};
+		}());
+
 	// polyfill these also
 	var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor,
 		defineProperty = Object.defineProperty;
 
 	try {
-		var obj = { a: 1 };
-		getOwnPropertyDescriptor(obj, 'a');
-		defineProperty(obj, 'a', { value: 2 });
+		defineProperty({}, '~', {});
+		getOwnPropertyDescriptor({}, '~');
 	} catch (e) {
 		// no native support, fix it.
 		getOwnPropertyDescriptor = function(object, key){
@@ -69,6 +75,8 @@
 			return object;
 		};
 	}
+
+	var escapeKeys = /^constructor|extend|define$/;
 
 	// the mixin is via Object.defineProperty for Object.keys (each)
 	var implement = function(proto){
@@ -85,7 +93,8 @@
 
 		// copies properties from other classes
 		each(proto, function(value, key){
-			if (key !== 'constructor' && key !== 'define' && key !== 'extend'){
+			if (!key.match(escapeKeys)){
+				isObject(value) && (proto[key] = clone(value));
 				this.define(key, getOwnPropertyDescriptor(proto, key) || {
 					writable: true,
 					enumerable: true,
@@ -126,15 +135,10 @@
 
 	var merge = function merge(a, b){
 		// extending objects (merge)
-		var toString = Object.prototype.toString,
-			objString = '[object Object]',
-			isObject = function(obj){
-				return toString.call(obj) === objString;
-			},
-			k,
+		var k,
 			callback = function(key){
 				// primitives from b are just copied, if b is object, it is dereferenced and merged
-				a[key] = (isObject(b[key]))	? (!isObject(a[key])) ? clone(b[key]) : merge(a[key], clone(b[key])) : b[key];
+				a[key] = (isObject(b[key])) ? (!isObject(a[key])) ? clone(b[key]) : merge(a[key], clone(b[key])) : b[key];
 			};
 
 		// Don't touch 'null' or 'undefined' objects.
@@ -145,7 +149,6 @@
 
 		return a;
 	};
-
 
 	// main
 	var prime = function(proto){
@@ -159,6 +162,8 @@
 		} : function(){
 		};
 
+		delete proto.constructor;
+
 		if (superclass){
 			var superproto = superclass.prototype;
 			// inherit from superclass
@@ -168,6 +173,11 @@
 			// because it's the shortest possible absolute reference
 			constructor.parent = superproto;
 			cproto.constructor = constructor;
+
+			// merge objects
+			isObject(proto.options) && isObject(superproto.options) && (proto.options = merge(clone(superproto.options), proto.options));
+
+			delete proto.extend;
 		}
 
 		// ability to call super via .parent
@@ -195,10 +205,10 @@
 	prime.create = create;
 	prime.define = defineProperty;
 
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd){
 		// define as an anonymous module so, through path mapping, it can be
 		// referenced as the "underscore" module
-		define(function() {
+		define(function(){
 			return prime;
 		});
 	}
