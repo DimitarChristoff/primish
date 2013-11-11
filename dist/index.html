@@ -44,7 +44,7 @@
 	</div>
 </div>
 <div id="content" class="container">
-	<h1>primish</h1>
+	<h1 id="primish">primish</h1>
 <p>A prime derivative that went beyond repair. Initially a fork of <a href="https://github.com/mootools/prime/">MooTools prime</a>, now with a lot of sugar. </p>
 <p>Why fork prime in the first place? Well... prime is very good. But it is written as a CommonJS module and it needs a fair amount of packaging and bundling of plugins and behaviours in order to make it work in a browser. Having to repeat these tasks for every project became repetitive and tedious after a while, hence this mini release. It does not only do module packaging, there are some small changes in code.</p>
 <h2 id="changes-from-upstream">Changes from upstream</h2>
@@ -55,6 +55,8 @@
 <li><code>.implement()</code> and <code>implement</code> mutator, like mootools. not <code>mixin</code></li>
 <li><code>extend</code>, not <code>inherits</code></li>
 <li><code>prime.merge()</code> shallow Object merging</li>
+<li>object keys of constructor object are NOT dereferenced / cloned</li>
+<li>only <code>options</code> key is merged with supers, not other objects</li>
 </ul>
 <h3 id="changes-from-upstream/emitter-changes">emitter changes</h3>
 <ul>
@@ -270,6 +272,25 @@ Rectangle.prototype.shrink = function(){
 square.setSide(5).shrink();
 square.width; // 4;
 square.height; // 4</code></pre>
+<p><strong>Warning</strong>: when creating a new sub class, if you have an <code>options</code> object in the constructor and the super class also has it,
+it will automatically merge them for you. This is really helpful when using the <a href="#plugins/options">options</a> mixin:</p>
+<pre class="prettyprint linenums"><code class="lang-javascript">require([&#39;prime/prime&#39;], function(prime){
+    var a = prime({
+        options: {
+            x: 1,
+            y: 1
+        }
+    });
+
+    var b = prime({
+        extend: a,
+        options: {
+            z: 1
+        }
+    });
+
+    console.log(new b().options);  // {x:1, y:1, z:1}
+});</code></pre>
 <h3 id="creating-a-class/implement">implement</h3>
 <p>The special key <code>implement</code> is used to tell prime which other Objects&#39; properties are to be <code>copied</code> into your own Class
 definition. Mixins do not work via inheritance, they create a local instance of the properties.</p>
@@ -425,7 +446,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 <li><code>.trigger(event, [Optional arguments])</code> - fires <code>String(event)</code> and optionally passes arguments to the callback</li>
 </ul>
 <p>By default, the scope of <code>this</code> in any event callback function will be the object that fired it, not the subscriber. If you want to keep scope bound to your local instance, you need to use <code>Function.prototype.bind</code> (if ES5Shim is being used) or <code>_.bind</code> (lodash or underscore), which is probably safer.</p>
-<h4>Using events</h4>
+<h4 id="using-events">Using events</h4>
 <pre class="prettyprint linenums"><code class="lang-ace">require([&#39;prime/prime&#39;, &#39;prime/emitter&#39;], function(prime, emitter){
     // this example won&#39;t run w/o ECMA5 Function.prototype.bind
 
@@ -500,7 +521,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 };
 
 model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create events fire the same handler</code></pre>
-<h4>definePseudo</h4>
+<h4 id="definepseudo">definePseudo</h4>
 <p>Emitter supports <code>pseudo events</code>, similar in style to CSS pseudos. For instance: <code>load:once</code> is a <code>load</code> event with a <code>once</code> pseudo.</p>
 <p>By default, emitter ships with <code>once</code> pre-defined - which will run an event callback once only, then unbind itself.</p>
 <p>It exposes an API to define custom pseudos on the emitter object.</p>
