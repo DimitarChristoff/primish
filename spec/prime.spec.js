@@ -65,6 +65,11 @@ describe('`extend` classes', function(){
 		human, student;
 
 	Human = prime({
+
+		options: {
+			age: 30
+		},
+
 		live: function(){
 
 		},
@@ -74,6 +79,11 @@ describe('`extend` classes', function(){
 	});
 
 	Student = prime({
+
+		options: {
+			school: 'LSE',
+			age: 34
+		},
 
 		extend: Human,
 
@@ -114,6 +124,12 @@ describe('`extend` classes', function(){
 
 		expect(human.eat).toBeDefined();
 		expect(student.eat).toBeDefined();
+	});
+
+	it('Should recursively merge objects from protos', function(){
+		expect(student.options.age).toEqual(human.constructor.prototype.options.age);
+		expect(student.options.age).toEqual(human.constructor.prototype.options.age);
+		expect(student.options.school).toEqual(student.constructor.prototype.options.school);
 	});
 
 });

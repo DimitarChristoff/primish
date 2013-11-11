@@ -58,7 +58,8 @@ describe('Class with the options mixin', function(){
 			implement: [options],
 
 			options: {
-				name: 'bob'
+				name: 'bob',
+				foo: 'bar'
 			},
 
 			constructor: function(options){
@@ -93,6 +94,7 @@ describe('Class with the options mixin', function(){
 		expect(i.options.education.extra).toBe(undefined);
 		expect(i.options.something).toBe(null);
 		expect(i.options.timestamp).toEqual(now);
+		expect(i.options.foo).toEqual(TestClass.prototype.options.foo);
 
 		// catch derefrencing
 		other.primary = false;

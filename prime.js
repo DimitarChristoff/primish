@@ -50,6 +50,14 @@
 	// slice reference
 	var slice = Array.prototype.slice;
 
+	var isObject = (function(){
+		var toString = Object.prototype.toString,
+			objString = '[object Object]';
+			return function(obj){
+				return toString.call(obj) === objString && obj != null;
+			};
+		}());
+
 	// polyfill these also
 	var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor,
 		defineProperty = Object.defineProperty;
@@ -126,15 +134,10 @@
 
 	var merge = function merge(a, b){
 		// extending objects (merge)
-		var toString = Object.prototype.toString,
-			objString = '[object Object]',
-			isObject = function(obj){
-				return toString.call(obj) === objString && obj != null;
-			},
-			k,
+		var k,
 			callback = function(key){
 				// primitives from b are just copied, if b is object, it is dereferenced and merged
-				a[key] = (isObject(b[key]))	? (!isObject(a[key])) ? clone(b[key]) : merge(a[key], clone(b[key])) : b[key];
+				a[key] = (isObject(b[key])) ? (!isObject(a[key])) ? clone(b[key]) : merge(a[key], clone(b[key])) : b[key];
 			};
 
 		// Don't touch 'null' or 'undefined' objects.
@@ -170,6 +173,12 @@
 			// because it's the shortest possible absolute reference
 			constructor.parent = superproto;
 			cproto.constructor = constructor;
+
+			// merge objects
+			each(proto, function(value, key){
+				isObject(this[key]) && (proto[key] = merge(this[key], proto[key]));
+			}, superproto);
+
 			delete proto.extend;
 		}
 
