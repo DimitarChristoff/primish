@@ -1,5 +1,5 @@
 /**
- * @module primish 0.1.6 - prototypish inheritance
+ * @module primish 0.2.0 - prototypish inheritance
  * @description browser-friendly or node-js Class sugar
  * based upon prime by Valerio Pioretti / MooTools, MIT
 **/

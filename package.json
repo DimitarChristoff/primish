@@ -9,13 +9,11 @@
   },
   "repository": "https://github.com/DimitarChristoff/primish",
   "license": "MIT",
-  "dependencies": {
-    "jasmine-node": "~1.7.0"
-  },
   "devDependencies": {
+    "jasmine-node": "~1.7.0",
     "grunt": "~0.4.1",
-    "grunt-doctor-md": "~0.0.6",
     "colors": "*",
+    "grunt-doctor-md": "~0.0.6",
     "grunt-contrib-clean": "~0.5.0"
   }
 }
