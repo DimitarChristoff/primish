@@ -3,7 +3,15 @@
  * @description browser-friendly or node-js Class sugar
  * based upon prime by Valerio Pioretti / MooTools, MIT
 **/
-;(function(){
+;(function(root, factory){
+	if (typeof define === 'function' && define.amd) {
+		define(factory);
+	} else if (typeof exports === 'object') {
+		module.exports = factory();
+	} else {
+		root.prime = factory();
+	}
+})(this, function() {
 	'use strict';
 
 	// hasOwnProperty shortcut
@@ -205,18 +213,5 @@
 	prime.create = create;
 	prime.define = defineProperty;
 
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd){
-		// define as an anonymous module so, through path mapping, it can be
-		// referenced as the "underscore" module
-		define(function(){
-			return prime;
-		});
-	}
-	else if (typeof module !== 'undefined' && module.exports){
-		// CommonJS module is defined
-		module.exports = prime;
-	}
-	else {
-		this.prime = prime;
-	}
-}.call(this));
+	return prime;
+});
