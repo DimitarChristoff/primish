@@ -33,7 +33,7 @@ module.exports = function(grunt){
 				copy: {
 					doctor: {
 						files: [{
-							dest: '<%= output%>/js/prime/',
+							dest: '<%= output%>/js/primish/',
 							src: ['*.js'],
 							expand: true,
 							flatten: true,

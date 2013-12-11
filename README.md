@@ -50,7 +50,7 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 To create a new Class, you simply need to do:
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 
 	var Human = prime({
 		setName: function(name){
@@ -71,7 +71,7 @@ require(['prime/prime'], function(prime){
 You can also add a constructor method on your config object to run automatically:
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 
 	var Human = prime({
 		constructor: function(name){
@@ -94,7 +94,7 @@ require(['prime/prime'], function(prime){
 Here is an example that will make the name property `readonly` and  example private variables
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 
     var Human = (function(){
         var storage = {},
@@ -156,7 +156,7 @@ The `constructor` method in your config object is what becomes the prime constru
 instantiate and can accept any number of arguments, named or otherwise.
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 	// have an element
 	var div = document.createElement('div');
 	div.setAttribute('id', 'myWidget');
@@ -194,7 +194,7 @@ any of its static properties and methods via the scope chain.
 This allows you to abstract differences between Classes without having to repeat a lot of code.
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 	var Rectangle = prime({
 
 		constructor: function(width, height){
@@ -269,7 +269,7 @@ square.height; // 4
 it will automatically merge them for you. This is really helpful when using the [options](#plugins/options) mixin:
 
 ```javascript
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 	var a = prime({
 		options: {
 			x: 1,
@@ -296,7 +296,7 @@ definition. Mixins do not work via inheritance, they create a local instance of 
 When used as a property, `implement` accepts either a single Class or an array of Classes to implement.
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 	// example using a small event emitter as a mixin
 	var EID = 0;
 
@@ -374,7 +374,7 @@ The parent method is borrowed from Arian's prime-util repo.
 Here is a more comprehensive example:
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 	// this example won't work w/o jQuery and ECMA5
 	// assume this.$element is a jquery wrapped el.
 
@@ -428,7 +428,7 @@ Define is a micro polyfill to `Object.defineProperty` - see [MDN](https://develo
 This allows you to have read-only properties of objects, or private getters/setters. Example use
 
 ```ace
-require(['prime/prime'], function(prime){
+require(['primish/prime'], function(prime){
 	var Human = prime({
 
 		constructor: function(name){
@@ -475,7 +475,7 @@ By default, the scope of `this` in any event callback function will be the objec
 #### Using events
 
 ```ace
-require(['prime/prime', 'prime/emitter'], function(prime, emitter){
+require(['primish/prime', 'primish/emitter'], function(prime, emitter){
 	// this example won't run w/o ECMA5 Function.prototype.bind
 
 	var someController = new (prime({
@@ -526,7 +526,7 @@ require(['prime/prime', 'prime/emitter'], function(prime, emitter){
 You can also use **named anonymous functions** to remove your own event in a hurry:
 
 ```ace
-require(['prime/prime', 'prime/emitter'], function(prime, emitter){
+require(['primish/prime', 'primish/emitter'], function(prime, emitter){
 	var Human = prime({
 		implement: [emitter],
 		constructor: function(){
@@ -569,7 +569,7 @@ By default, emitter ships with `once` pre-defined - which will run an event call
 It exposes an API to define custom pseudos on the emitter object.
 
 ```ace
-require(['prime/prime', 'prime/emitter'], function(prime, emitter){
+require(['primish/prime', 'primish/emitter'], function(prime, emitter){
 
     var user = {
         role: 'tester'
@@ -613,7 +613,7 @@ require(['prime/prime', 'prime/emitter'], function(prime, emitter){
 A small utility mixin from Arian's prime-util that allows easy object merge of an Object into `this.object` from right to left. If emitter is also mixed-in, it will automatically add events prefixed by `on` and camelcased, eg, `onReady: function(){}`.
 
 ```ace
-require(['prime/prime', 'prime/emitter', 'prime/options'], function(prime, emitter, options){
+require(['primish/prime', 'primish/emitter', 'primish/options'], function(prime, emitter, options){
 	var Human = prime({
 		options: {
 			name: 'unknown'

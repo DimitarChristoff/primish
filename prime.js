@@ -1,17 +1,18 @@
 /**
- * @module primish 0.2.0 - prototypish inheritance
+ * @module primish 0.2.1 - prototypish inheritance
  * @description browser-friendly or node-js Class sugar
  * based upon prime by Valerio Pioretti / MooTools, MIT
-**/
+ **/
 ;(function(root, factory){
-	if (typeof define === 'function' && define.amd) {
+	'use strict';
+	if (typeof define === 'function' && define.amd){
 		define(factory);
-	} else if (typeof exports === 'object') {
+	} else if (typeof exports === 'object'){
 		module.exports = factory();
 	} else {
 		root.prime = factory();
 	}
-})(this, function() {
+})(this, function(){
 	'use strict';
 
 	// hasOwnProperty shortcut
@@ -61,10 +62,10 @@
 	var isObject = (function(){
 		var toString = Object.prototype.toString,
 			objString = '[object Object]';
-			return function(obj){
-				return toString.call(obj) === objString && obj != null;
-			};
-		}());
+		return function(obj){
+			return toString.call(obj) === objString && obj != null;
+		};
+	}());
 
 	// polyfill these also
 	var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor,

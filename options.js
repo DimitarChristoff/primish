@@ -3,14 +3,16 @@
  * @description setOptions mixin for primish
  **/
 ;(function(root, factory){
-	if (typeof define === 'function' && define.amd) {
+	'use strict';
+
+	if (typeof define === 'function' && define.amd){
 		define(['./prime'], factory);
-	} else if (typeof exports === 'object') {
+	} else if (typeof exports === 'object'){
 		module.exports = factory(require('./prime'));
 	} else {
 		root.options = factory(root.prime);
 	}
-})(this, function(prime) {
+})(this, function(prime){
 	'use strict';
 
 	var sFunction = 'function',
@@ -28,11 +30,11 @@
 				o;
 
 			this.options || (this.options = {});
-			o = this.options =  prime.merge(this.options, options);
+			o = this.options = prime.merge(this.options, options);
 
 			// add the events as well, if class has events.
 			if ((this.on && this.off))
-				for(option in o){
+				for (option in o){
 					if (o.hasOwnProperty(option)){
 						if (typeof o[option] !== sFunction || !(/^on[A-Z]/).test(option)) continue;
 						this.on(removeOn(option), o[option]);

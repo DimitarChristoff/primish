@@ -3,14 +3,16 @@
  * @description emitter for primish, standalone mediator or mixin
  **/
 ;(function(root, factory){
-	if (typeof define === 'function' && define.amd) {
+	'use strict';
+
+	if (typeof define === 'function' && define.amd){
 		define(['./prime'], factory);
-	} else if (typeof exports === 'object') {
+	} else if (typeof exports === 'object'){
 		module.exports = factory(require('./prime'));
 	} else {
 		root.options = factory(root.prime);
 	}
-})(this, function(prime) {
+})(this, function(prime){
 	'use strict';
 
 	var slice = Array.prototype.slice;
@@ -21,16 +23,16 @@
 		once: function(eventName, fn){
 			var self = this,
 				wrapped = function(){
-				fn.apply(this, arguments);
-				self.off(eventName, wrapped);
-			};
+					fn.apply(this, arguments);
+					self.off(eventName, wrapped);
+				};
 			return wrapped;
 		}
 	};
 
 	var hideProperty = function(obj, prop){
 		// listeners not to be enumerable where supported
-		return obj[prop] = {}, prime.define(obj, prop, {enumerable: false, value:obj[prop]}), obj[prop];
+		return obj[prop] = {}, prime.define(obj, prop, {enumerable: false, value: obj[prop]}), obj[prop];
 	};
 
 	var emitter = prime({
@@ -48,17 +50,17 @@
 				knownPseudo;
 
 			loopEvents:
-			for (;i < len; ++i){
-				pseudos = event[i].split(':');
-				eventName = pseudos.shift();
-				knownPseudo = pseudos.length && pseudos[0] in pseudoEvents;
+				for (; i < len; ++i){
+					pseudos = event[i].split(':');
+					eventName = pseudos.shift();
+					knownPseudo = pseudos.length && pseudos[0] in pseudoEvents;
 
-				knownPseudo || (eventName = event[i]);
-				events = listeners[eventName] || (listeners[eventName] = {});
+					knownPseudo || (eventName = event[i]);
+					events = listeners[eventName] || (listeners[eventName] = {});
 
-				for (k in events) if (events[k] === fn) continue loopEvents;
-				events[(EID++).toString(36)] = knownPseudo ? pseudoEvents[pseudos[0]].call(this, eventName, fn) : fn;
-			}
+					for (k in events) if (events[k] === fn) continue loopEvents;
+					events[(EID++).toString(36)] = knownPseudo ? pseudoEvents[pseudos[0]].call(this, eventName, fn) : fn;
+				}
 			return this;
 		},
 
