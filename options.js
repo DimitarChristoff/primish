@@ -1,11 +1,9 @@
 /**
  * @module primish/options
  * @description setOptions mixin for primish
- *
  **/
 ;(function(factory){
-	'use strict';
-
+	// UMD wrap
 	if (typeof define === 'function' && define.amd){
 		define(['./prime'], factory);
 	} else if (typeof module !== 'undefined' && module.exports){
@@ -14,8 +12,6 @@
 		this.emitter = factory(this.prime);
 	}
 }).call(this, function(prime){
-	'use strict';
-
 	var sFunction = 'function',
 		removeOn = function(string){
 			// removes <on>Event prefix and returns a normalised event name

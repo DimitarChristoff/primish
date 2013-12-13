@@ -1,6 +1,6 @@
-module.exports = function(grunt){
-	'use strict';
+'use strict';
 
+module.exports = function(grunt){
 	// Project configuration.
 	grunt.initConfig({
 
@@ -10,6 +10,11 @@ module.exports = function(grunt){
 		// Before generating any new files, remove any previously-created files.
 		clean: {
 			dist: ['<%= output%>']
+		},
+
+		jshint: {
+			files: ['prime.js', 'options.js', 'emitter.js'],
+			options: grunt.file.readJSON('.jshintrc')
 		},
 
 		// builds the docs via grunt-doctor-md task.
@@ -64,15 +69,11 @@ module.exports = function(grunt){
 			}
 		}
 
-
 	});
 
-	// These plugins provide necessary tasks.
-	// grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-doctor-md');
+	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
 	// By default, clean and generate docs
 	grunt.registerTask('default', ['clean','doctor']);
-	grunt.registerTask('test', ['doctor']);
+	grunt.registerTask('test', ['jshint']);
 };

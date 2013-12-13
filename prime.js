@@ -1,11 +1,9 @@
 /**
- * @module primish 0.2.1 - prototypish inheritance
+ * @module primish 0.2.2 - prototypal inheritance sugar, MooTools Style
  * @description browser-friendly or node-js Class sugar
- * based upon prime by Valerio Pioretti / MooTools, MIT
  **/
 ;(function(factory){
-	'use strict';
-
+	// UMD wrap
 	if (typeof define === 'function' && define.amd){
 		define(factory);
 	} else if (typeof module !== 'undefined' && module.exports){
@@ -14,12 +12,11 @@
 		this.emitter = factory();
 	}
 }).call(this, function(){
-	'use strict';
-
-	// hasOwnProperty shortcut
-	var has = function(self, key){
-		return Object.hasOwnProperty.call(self, key);
-	};
+	var hasOwnProperty = Object.hasOwnProperty,
+		has = function(obj, key){
+			// hasOwnProperty shortcut
+			return hasOwnProperty.call(obj, key);
+		};
 
 	var each = function(object, method, context){
 		for (var key in object)
@@ -147,7 +144,7 @@
 		// extending objects (merge)
 		var k,
 			callback = function(key){
-				// primitives from b are just copied, if b is object, it is dereferenced and merged
+				// primitives from b are just copied, if b is object, it is de-referenced and merged
 				a[key] = (isObject(b[key])) ? (!isObject(a[key])) ? clone(b[key]) : merge(a[key], clone(b[key])) : b[key];
 			};
 

@@ -1,11 +1,9 @@
 /**
  * @module primish/emitter
  * @description emitter for primish, standalone mediator or mixin
- *
  **/
 ;(function(factory){
-	'use strict';
-
+	// UMD wrap
 	if (typeof define === 'function' && define.amd){
 		define(['./prime'], factory);
 	} else if (typeof module !== 'undefined' && module.exports){
@@ -14,8 +12,6 @@
 		this.emitter = factory(this.prime);
 	}
 }).call(this, function(prime){
-	'use strict';
-
 	var slice = Array.prototype.slice;
 
 	var EID = 0;
