@@ -1,18 +1,19 @@
 /**
  * @module primish/options
  * @description setOptions mixin for primish
+ *
  **/
-;(function(root, factory){
+;(function(factory){
 	'use strict';
 
 	if (typeof define === 'function' && define.amd){
 		define(['./prime'], factory);
-	} else if (typeof exports === 'object'){
+	} else if (typeof module !== 'undefined' && module.exports){
 		module.exports = factory(require('./prime'));
 	} else {
-		root.options = factory(root.prime);
+		this.emitter = factory(this.prime);
 	}
-})(this, function(prime){
+}).call(this, function(prime){
 	'use strict';
 
 	var sFunction = 'function',

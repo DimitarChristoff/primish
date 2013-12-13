@@ -3,16 +3,17 @@
  * @description browser-friendly or node-js Class sugar
  * based upon prime by Valerio Pioretti / MooTools, MIT
  **/
-;(function(root, factory){
+;(function(factory){
 	'use strict';
+
 	if (typeof define === 'function' && define.amd){
 		define(factory);
-	} else if (typeof exports === 'object'){
+	} else if (typeof module !== 'undefined' && module.exports){
 		module.exports = factory();
 	} else {
-		root.prime = factory();
+		this.emitter = factory();
 	}
-})(this, function(){
+}).call(this, function(){
 	'use strict';
 
 	// hasOwnProperty shortcut

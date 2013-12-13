@@ -1,13 +1,14 @@
 /**
  * @module primish/emitter
  * @description emitter for primish, standalone mediator or mixin
+ *
  **/
 ;(function(factory){
 	'use strict';
 
 	if (typeof define === 'function' && define.amd){
 		define(['./prime'], factory);
-	} else if (typeof exports === 'object'){
+	} else if (typeof module !== 'undefined' && module.exports){
 		module.exports = factory(require('./prime'));
 	} else {
 		this.emitter = factory(this.prime);
