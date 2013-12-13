@@ -2,7 +2,7 @@
  * @module primish/emitter
  * @description emitter for primish, standalone mediator or mixin
  **/
-;(function(root, factory){
+;(function(factory){
 	'use strict';
 
 	if (typeof define === 'function' && define.amd){
@@ -10,9 +10,9 @@
 	} else if (typeof exports === 'object'){
 		module.exports = factory(require('./prime'));
 	} else {
-		root.options = factory(root.prime);
+		this.emitter = factory(this.prime);
 	}
-})(this, function(prime){
+}).call(this, function(prime){
 	'use strict';
 
 	var slice = Array.prototype.slice;
