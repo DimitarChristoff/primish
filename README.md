@@ -5,7 +5,7 @@ A prime derivative that went beyond repair. Initially a fork of [MooTools prime]
 
 Why fork prime in the first place? Well... prime is very good. But it is written as a CommonJS module and it needs a fair amount of packaging and bundling of plugins and behaviours in order to make it work in a browser. Having to repeat these tasks for every project became repetitive and tedious after a while, hence this mini release. It does not only do module packaging, there are some small changes in code.
 
-## Changes from upstream
+## Differences
 
 ### prime changes
 
@@ -16,7 +16,8 @@ Why fork prime in the first place? Well... prime is very good. But it is written
 - `prime.merge()` shallow Object merging
 - object keys of constructor object are NOT dereferenced / cloned
 - only `options` key is merged with supers, not other objects
-
+- extras from prime like utils, shell, type, etc have all been removed, recommended util library is `lodash`
+ 
 ### emitter changes
 
 - `.emit` is actually `.trigger`, so it's not an `emitter` as such :)
