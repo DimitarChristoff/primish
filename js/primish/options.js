@@ -2,19 +2,16 @@
  * @module primish/options
  * @description setOptions mixin for primish
  **/
-;(function(root, factory){
-	'use strict';
-
+;(function(factory){
+	// UMD wrap
 	if (typeof define === 'function' && define.amd){
-		define(['./prime'], factory);
-	} else if (typeof exports === 'object'){
-		module.exports = factory(require('./prime'));
+		define(['./primish'], factory);
+	} else if (typeof module !== 'undefined' && module.exports){
+		module.exports = factory(require('./primish'));
 	} else {
-		root.options = factory(root.prime);
+		this.options = factory(this.primish);
 	}
-})(this, function(prime){
-	'use strict';
-
+}).call(this, function(primish){
 	var sFunction = 'function',
 		removeOn = function(string){
 			// removes <on>Event prefix and returns a normalised event name
@@ -23,14 +20,14 @@
 			});
 		};
 
-	return prime({
+	return primish({
 		// a mixin class that allows for this.setOptions
 		setOptions: function(options){
 			var option,
 				o;
 
 			this.options || (this.options = {});
-			o = this.options = prime.merge(this.options, options);
+			o = this.options = primish.merge(this.options, options);
 
 			// add the events as well, if class has events.
 			if ((this.on && this.off))

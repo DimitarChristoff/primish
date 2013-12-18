@@ -21,7 +21,7 @@
 		</div>
 		<div class="separator"></div>
 	
-	<ul id="sections"><li class="l2"><a href="#changes-from-upstream">Changes from upstream</a><ul><li class="l3"><a href="#changes-from-upstream/prime-changes">prime changes</a></li><li class="l3"><a href="#changes-from-upstream/emitter-changes">emitter changes</a></li><li class="l3"><a href="#changes-from-upstream/options">options</a></li><li class="l3"><a href="#changes-from-upstream/browser-support">browser support</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/implement">implement</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li><li class="l2"><a href="#license">License</a></li></ul>
+	<ul id="sections"><li class="l2"><a href="#differences">Differences</a><ul><li class="l3"><a href="#differences/prime-changes">prime changes</a></li><li class="l3"><a href="#differences/emitter-changes">emitter changes</a></li><li class="l3"><a href="#differences/options">options</a></li><li class="l3"><a href="#differences/browser-support">browser support</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/implement">implement</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li><li class="l2"><a href="#license">License</a></li></ul>
 	<div class="separator"></div>
 	
 		<div class="extra" id="github">
@@ -47,8 +47,8 @@
 	<h1 id="primish">primish</h1>
 <p>A prime derivative that went beyond repair. Initially a fork of <a href="https://github.com/mootools/prime/">MooTools prime</a>, now with a lot of sugar. </p>
 <p>Why fork prime in the first place? Well... prime is very good. But it is written as a CommonJS module and it needs a fair amount of packaging and bundling of plugins and behaviours in order to make it work in a browser. Having to repeat these tasks for every project became repetitive and tedious after a while, hence this mini release. It does not only do module packaging, there are some small changes in code.</p>
-<h2 id="changes-from-upstream">Changes from upstream</h2>
-<h3 id="changes-from-upstream/prime-changes">prime changes</h3>
+<h2 id="differences">Differences</h2>
+<h3 id="differences/prime-changes">prime changes</h3>
 <ul>
 <li>forked from before the new prime <a href="https://github.com/mootools/prime/blob/master/index.js#L6-L11">types and object mixins</a>.</li>
 <li><code>.parent()</code></li>
@@ -57,8 +57,9 @@
 <li><code>prime.merge()</code> shallow Object merging</li>
 <li>object keys of constructor object are NOT dereferenced / cloned</li>
 <li>only <code>options</code> key is merged with supers, not other objects</li>
+<li>extras from prime like utils, shell, type, etc have all been removed, recommended util library is <code>lodash</code></li>
 </ul>
-<h3 id="changes-from-upstream/emitter-changes">emitter changes</h3>
+<h3 id="differences/emitter-changes">emitter changes</h3>
 <ul>
 <li><code>.emit</code> is actually <code>.trigger</code>, so it&#39;s not an <code>emitter</code> as such :)</li>
 <li>no support for defered async events (see <a href="https://github.com/mootools/prime/blob/master/emitter.js#L50-L65">this</a>)</li>
@@ -66,12 +67,12 @@
 <li>support for event pseudos like <code>.on(&#39;foo:once&#39;, function(){});</code></li>
 <li><code>emitter.definePseudo()</code> to allow custom pseudo events</li>
 </ul>
-<h3 id="changes-from-upstream/options">options</h3>
+<h3 id="differences/options">options</h3>
 <ul>
 <li><code>.setOptions()</code> - shallow merging of object with <code>this.options</code></li>
 <li>support for emitter events via <code>onEventname</code> -&gt; <code>this.on(&#39;eventname&#39;)</code> like in MooTools 1.x</li>
 </ul>
-<h3 id="changes-from-upstream/browser-support">browser support</h3>
+<h3 id="differences/browser-support">browser support</h3>
 <p>The main driving force behind primish is to change prime to work in a browser out of the box as well as under nodejs.
 This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don&#39;t have an AMD loader and not under NodeJS / browserify, it will export <code>window.prime</code>, <code>window.emitter</code> and <code>window.options</code>,
 so be careful. Another goal has been to bring as much MooTools 1.x sugar into classes as possible.</p>
@@ -83,7 +84,7 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 <p><img src="http://cdn.meme.li/instances/300x300/39768609.jpg" alt="our own"></p>
 <h2 id="creating-a-class">Creating a Class</h2>
 <p>To create a new Class, you simply need to do:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
 
     var Human = prime({
         setName: function(name){
@@ -100,7 +101,7 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 
 });</code></pre>
 <p>You can also add a constructor method on your config object to run automatically:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
 
     var Human = prime({
         constructor: function(name){
@@ -119,7 +120,7 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 
 });</code></pre>
 <p>Here is an example that will make the name property <code>readonly</code> and  example private variables</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
 
     var Human = (function(){
         var storage = {},
@@ -174,7 +175,7 @@ following keys in your config object are considered <code>mutator</code>:</p>
 <h3 id="creating-a-class/constructor">constructor</h3>
 <p>The <code>constructor</code> method in your config object is what becomes the prime constructor. It runs automatically when you
 instantiate and can accept any number of arguments, named or otherwise.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
     // have an element
     var div = document.createElement(&#39;div&#39;);
     div.setAttribute(&#39;id&#39;, &#39;myWidget&#39;);
@@ -206,7 +207,7 @@ instantiate and can accept any number of arguments, named or otherwise.</p>
 pointing to another Class. The resulting new Class definition will have its prototype set to the SuperClass and inherit
 any of its static properties and methods via the scope chain.</p>
 <p>This allows you to abstract differences between Classes without having to repeat a lot of code.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
     var Rectangle = prime({
 
         constructor: function(width, height){
@@ -274,7 +275,7 @@ square.width; // 4;
 square.height; // 4</code></pre>
 <p><strong>Warning</strong>: when creating a new sub class, if you have an <code>options</code> object in the constructor and the super class also has it,
 it will automatically merge them for you. This is really helpful when using the <a href="#plugins/options">options</a> mixin:</p>
-<pre class="prettyprint linenums"><code class="lang-javascript">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-javascript">require([&#39;primish/primish&#39;], function(prime){
     var a = prime({
         options: {
             x: 1,
@@ -295,7 +296,7 @@ it will automatically merge them for you. This is really helpful when using the 
 <p>The special key <code>implement</code> is used to tell prime which other Objects&#39; properties are to be <code>copied</code> into your own Class
 definition. Mixins do not work via inheritance, they create a local instance of the properties.</p>
 <p>When used as a property, <code>implement</code> accepts either a single Class or an array of Classes to implement.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
     // example using a small event emitter as a mixin
     var EID = 0;
 
@@ -359,7 +360,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 <p><code>this.constructor.prototype.methodname.apply(this, [arguments])</code>, where methodname is the method passed as string.</p>
 <p>The parent method is borrowed from Arian&#39;s prime-util repo.</p>
 <p>Here is a more comprehensive example:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
     // this example won&#39;t work w/o jQuery and ECMA5
     // assume this.$element is a jquery wrapped el.
 
@@ -407,7 +408,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 <h2 id="define">Define</h2>
 <p>Define is a micro polyfill to <code>Object.defineProperty</code> - see <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN</a>. It works in conjunction with <code>Object.getOwnPropertyDescriptor</code>, which is also shimmed for older browsers.</p>
 <p>This allows you to have read-only properties of objects, or private getters/setters. Example use</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
     var Human = prime({
 
         constructor: function(name){
@@ -447,7 +448,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 </ul>
 <p>By default, the scope of <code>this</code> in any event callback function will be the object that fired it, not the subscriber. If you want to keep scope bound to your local instance, you need to use <code>Function.prototype.bind</code> (if ES5Shim is being used) or <code>_.bind</code> (lodash or underscore), which is probably safer.</p>
 <h4 id="using-events">Using events</h4>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
     // this example won&#39;t run w/o ECMA5 Function.prototype.bind
 
     var someController = new (prime({
@@ -494,7 +495,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
     }, 1000);
 });</code></pre>
 <p>You can also use <strong>named anonymous functions</strong> to remove your own event in a hurry:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
     var Human = prime({
         implement: [emitter],
         constructor: function(){
@@ -525,7 +526,7 @@ model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create e
 <p>Emitter supports <code>pseudo events</code>, similar in style to CSS pseudos. For instance: <code>load:once</code> is a <code>load</code> event with a <code>once</code> pseudo.</p>
 <p>By default, emitter ships with <code>once</code> pre-defined - which will run an event callback once only, then unbind itself.</p>
 <p>It exposes an API to define custom pseudos on the emitter object.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
 
     var user = {
         role: &#39;tester&#39;
@@ -564,7 +565,7 @@ model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create e
 });</code></pre>
 <h3 id="plugins/options">options</h3>
 <p>A small utility mixin from Arian&#39;s prime-util that allows easy object merge of an Object into <code>this.object</code> from right to left. If emitter is also mixed-in, it will automatically add events prefixed by <code>on</code> and camelcased, eg, <code>onReady: function(){}</code>.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/prime&#39;, &#39;primish/emitter&#39;, &#39;primish/options&#39;], function(prime, emitter, options){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;, &#39;primish/options&#39;], function(prime, emitter, options){
     var Human = prime({
         options: {
             name: &#39;unknown&#39;

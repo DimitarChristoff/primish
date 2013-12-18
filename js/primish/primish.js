@@ -1,24 +1,22 @@
 /**
- * @module primish 0.2.1 - prototypish inheritance
+ * @module primish 0.2.2 - prototypal inheritance sugar, MooTools Style
  * @description browser-friendly or node-js Class sugar
- * based upon prime by Valerio Pioretti / MooTools, MIT
  **/
-;(function(root, factory){
-	'use strict';
+;(function(factory){
+	// UMD wrap
 	if (typeof define === 'function' && define.amd){
 		define(factory);
-	} else if (typeof exports === 'object'){
+	} else if (typeof module !== 'undefined' && module.exports){
 		module.exports = factory();
 	} else {
-		root.prime = factory();
+		this.primish = factory();
 	}
-})(this, function(){
-	'use strict';
-
-	// hasOwnProperty shortcut
-	var has = function(self, key){
-		return Object.hasOwnProperty.call(self, key);
-	};
+}).call(this, function(){
+	var hasOwnProperty = Object.hasOwnProperty,
+		has = function(obj, key){
+			// hasOwnProperty shortcut
+			return hasOwnProperty.call(obj, key);
+		};
 
 	var each = function(object, method, context){
 		for (var key in object)
@@ -146,7 +144,7 @@
 		// extending objects (merge)
 		var k,
 			callback = function(key){
-				// primitives from b are just copied, if b is object, it is dereferenced and merged
+				// primitives from b are just copied, if b is object, it is de-referenced and merged
 				a[key] = (isObject(b[key])) ? (!isObject(a[key])) ? clone(b[key]) : merge(a[key], clone(b[key])) : b[key];
 			};
 
@@ -160,7 +158,7 @@
 	};
 
 	// main
-	var prime = function(proto){
+	var primish = function(proto){
 		var superclass = proto.extend;
 		// if our nice proto object has no own constructor property
 		// then we proceed using a ghosting constructor that all it does is
@@ -206,13 +204,16 @@
 	};
 
 	// exports
-	prime.has = has;
-	prime.each = each;
-	prime.merge = merge;
+	primish.has = has;
+	primish.each = each;
+	primish.merge = merge;
 
 	// prime.create is Object.create polyfill
-	prime.create = create;
-	prime.define = defineProperty;
+	primish.create = create;
+	primish.define = defineProperty;
+	primish.hide = function(obj, prop){
+		return obj[prop] = obj[prop] || {}, defineProperty(obj, prop, {enumerable: false, value: obj[prop]}), obj[prop];
+	};
 
-	return prime;
+	return primish;
 });
