@@ -1,6 +1,6 @@
 /**
  * @module primish 0.2.2 - prototypal inheritance sugar, MooTools Style
- * @description browser-friendly or node-js prime clone
+ * @description browser-friendly or node-js Class sugar
  **/
 ;(function(factory){
 	// UMD wrap

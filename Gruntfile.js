@@ -13,7 +13,7 @@ module.exports = function(grunt){
 		},
 
 		jshint: {
-			files: ['prime.js', 'options.js', 'emitter.js'],
+			files: ['primish.js', 'options.js', 'emitter.js'],
 			options: grunt.file.readJSON('.jshintrc')
 		},
 

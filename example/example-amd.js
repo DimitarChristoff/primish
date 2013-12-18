@@ -1,7 +1,7 @@
 define(function(require){
 	'use strict';
 
-	var prime = require('../primish'),
+	var primish = require('../primish'),
 		Human = primish({
 
 			constructor: function(name){
