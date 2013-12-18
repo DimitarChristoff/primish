@@ -1,13 +1,13 @@
 'use strict';
 
-var prime = require('../prime');
+var primish = require('../primish');
 
 // core functionality of prime
 
 describe('Creating prototypes', function(){
 
 	beforeEach(function(){
-		this.instance = prime({
+		this.instance = primish({
 			constructor: function(cb){
 				cb && cb.call(this);
 			},
@@ -34,7 +34,7 @@ describe('Calling `constructor` automatically', function(){
 
 	var obj = {
 		runme: function(){}
-	}, C = prime({
+	}, C = primish({
 		constructor: function(){
 			obj.runme();
 		}
@@ -51,7 +51,7 @@ describe('Calling `constructor` automatically', function(){
 describe('Immediate invocation of constructor', function(){
 
 	it('Should have a context', function(){
-		new prime({
+		new primish({
 			constructor: function(){
 				expect(this).not.toBeUndefined();
 			}
@@ -67,7 +67,7 @@ describe('`extend` classes', function(){
 			age: 30
 		};
 
-	Human = prime({
+	Human = primish({
 
 		options: opt,
 
@@ -83,7 +83,7 @@ describe('`extend` classes', function(){
 		}
 	});
 
-	Student = prime({
+	Student = primish({
 
 		options: {
 			school: 'LSE',
@@ -146,7 +146,7 @@ describe('.parent should call method from super prototype', function(){
 
 	var obj = {
 		runme: function(){}
-	}, C = prime({
+	}, C = primish({
 		method: function(name){
 			obj.runme(name);
 		}
@@ -154,7 +154,7 @@ describe('.parent should call method from super prototype', function(){
 
 
 	it('Should run override method from the super', function(){
-		var A = prime({
+		var A = primish({
 			extend: C,
 			method: function(){
 
@@ -168,7 +168,7 @@ describe('.parent should call method from super prototype', function(){
 	});
 
 	it('Should run from super proto on .parent() call', function(){
-		var A = prime({
+		var A = primish({
 			extend: C,
 			method: function(){
 				this.parent('method');
@@ -183,7 +183,7 @@ describe('.parent should call method from super prototype', function(){
 
 	it('Should throw on a .parent() call without a method', function(){
 		expect(function(){
-			var A = prime({
+			var A = primish({
 				extend: C,
 				method: function(){
 					this.parent();
@@ -198,7 +198,7 @@ describe('.parent should call method from super prototype', function(){
 
 	it('Should throw on a .parent() call when method not found', function(){
 		expect(function(){
-			var A = prime({
+			var A = primish({
 				extend: C,
 				method: function(){
 					this.parent('missing');
@@ -212,7 +212,7 @@ describe('.parent should call method from super prototype', function(){
 	});
 
 	it('Should pass arguments to .parent() calls by shifting', function(){
-		var A = prime({
+		var A = primish({
 			extend: C,
 			method: function(){
 				this.parent('method', 'hai');
@@ -233,7 +233,7 @@ describe('`implement` classes', function(){
 		Student,
 		student;
 
-	Human = prime({
+	Human = primish({
 		live: function(){
 
 		},
@@ -242,7 +242,7 @@ describe('`implement` classes', function(){
 		}
 	});
 
-	Student = prime({
+	Student = primish({
 		study: function(){
 
 		}
@@ -277,14 +277,14 @@ describe('`implement` of classes via mutator property', function(){
 		Play,
 		bob;
 
-	Work = prime({
+	Work = primish({
 		one: 'one',
 		two: 'two',
 		start: function(){},
 		end: function(){}
 	});
 
-	Play = prime({
+	Play = primish({
 		one: '1',
 		two: '2',
 		drink: function(){},
@@ -292,7 +292,7 @@ describe('`implement` of classes via mutator property', function(){
 	});
 
 
-	Human = prime({
+	Human = primish({
 		implement: [Work, Play],
 		one: 'uno',
 		live: function(){},
@@ -321,7 +321,7 @@ describe('`implement` of classes via mutator property', function(){
 	});
 
 	it('Should also accept a single constructor for mixins, not just array', function(){
-		var bob = new (prime({
+		var bob = new (primish({
 			implement: Work,
 			one: 'uno',
 			live: function(){},

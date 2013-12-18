@@ -1,6 +1,6 @@
 'use strict';
 
-var prime = require('../prime'),
+var primish = require('../primish'),
 	emitter = require('../emitter'),
 	options = require('../options');
 
@@ -8,7 +8,7 @@ var prime = require('../prime'),
 describe('Class with the options mixin', function(){
 
 	it('Should merge options on the instance', function(){
-		var TestClass = prime({
+		var TestClass = primish({
 
 			implement: [options],
 
@@ -31,7 +31,7 @@ describe('Class with the options mixin', function(){
 	});
 
 	it('Should merge options on the instance with passed overriding prototype', function(){
-		var TestClass = prime({
+		var TestClass = primish({
 
 			implement: [options],
 
@@ -53,7 +53,7 @@ describe('Class with the options mixin', function(){
 	});
 
 	it('Should deep merge objects recursively', function(){
-		var TestClass = prime({
+		var TestClass = primish({
 
 			implement: [options],
 
@@ -103,7 +103,7 @@ describe('Class with the options mixin', function(){
 	});
 
 	it('Should have merged options to dereferenced', function(){
-		var TestClass = prime({
+		var TestClass = primish({
 
 			implement: [options],
 
@@ -129,7 +129,7 @@ describe('Class with the options mixin', function(){
 	});
 
 	it('Should add events from options automatically, removing from options object', function(){
-		var TestClass = prime({
+		var TestClass = primish({
 
 			implement: [options, emitter],
 
@@ -163,7 +163,7 @@ describe('Class with the options mixin', function(){
 	});
 
 	it('Should ignore options onEvent keys if no Emitter mixed in', function(){
-		var TestClass = prime({
+		var TestClass = primish({
 
 			implement: [options],
 

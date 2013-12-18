@@ -1,11 +1,11 @@
 define(function(require){
 	'use strict';
 
-	var prime = require('../prime'),
+	var prime = require('../primish'),
 		emitter = require('../emitter');
 
 
-	var Human = prime({
+	var Human = primish({
 
 		implement: emitter,
 
@@ -23,7 +23,7 @@ define(function(require){
 		}
 
 	}),
-	Ninja = prime({
+	Ninja = primish({
 
 		extend: Human,
 

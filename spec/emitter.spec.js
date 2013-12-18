@@ -1,6 +1,6 @@
 'use strict';
 
-var prime = require('../prime'),
+var primish = require('../primish'),
 	emitter = require('../emitter');
 
 
@@ -10,7 +10,7 @@ describe('Creating a class with the events mixin', function(){
 
 	var TestClass;
 	beforeEach(function(){
-		TestClass = prime({
+		TestClass = primish({
 			constructor:function(){}
 		}).implement(new emitter());
 	});
@@ -25,7 +25,7 @@ describe('Creating a class with the events mixin', function(){
 	});
 
 	it('Should create a class with emitter via implement: [] mutator', function(){
-		var TestClass = prime({
+		var TestClass = primish({
 			implement: emitter
 		});
 

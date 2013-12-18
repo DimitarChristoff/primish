@@ -1,8 +1,8 @@
 define(function(require){
 	'use strict';
 
-	var prime = require('../prime'),
-		Human = prime({
+	var prime = require('../primish'),
+		Human = primish({
 
 			constructor: function(name){
 				this.dob = (new Date()).getTime();
@@ -18,7 +18,7 @@ define(function(require){
 			}
 
 		}),
-		Ninja = prime({
+		Ninja = primish({
 
 			extend: Human,
 

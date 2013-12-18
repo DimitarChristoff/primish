@@ -5,13 +5,13 @@
 ;(function(factory){
 	// UMD wrap
 	if (typeof define === 'function' && define.amd){
-		define(['./prime'], factory);
+		define(['./primish'], factory);
 	} else if (typeof module !== 'undefined' && module.exports){
-		module.exports = factory(require('./prime'));
+		module.exports = factory(require('./primish'));
 	} else {
-		this.emitter = factory(this.prime);
+		this.emitter = factory(this.primish);
 	}
-}).call(this, function(prime){
+}).call(this, function(primish){
 	var slice = Array.prototype.slice;
 
 	var EID = 0;
@@ -27,19 +27,14 @@
 		}
 	};
 
-	var hideProperty = function(obj, prop){
-		// listeners not to be enumerable where supported
-		return obj[prop] = {}, prime.define(obj, prop, {enumerable: false, value: obj[prop]}), obj[prop];
-	};
-
-	var emitter = prime({
+	var emitter = primish({
 
 		on: function(event, fn){
 			// supports multiple events split by white space
 			event = event.split(/\s+/);
 			var i = 0,
 				len = event.length,
-				listeners = this._listeners || hideProperty(this, '_listeners'),
+				listeners = this._listeners || primish.hide(this, '_listeners'),
 				events,
 				k,
 				pseudos,

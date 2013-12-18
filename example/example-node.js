@@ -5,8 +5,8 @@
 // definitions and deps
 require('colors');
 
-var prime = require('../prime'),
-	Human = prime({
+var prime = require('../primish'),
+	Human = primish({
 
 		constructor: function(name){
 			this.dob = (new Date()).getTime();
@@ -22,7 +22,7 @@ var prime = require('../prime'),
 		}
 
 	}),
-	Ninja = prime({
+	Ninja = primish({
 
 		extend: Human,
 

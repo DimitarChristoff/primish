@@ -9,7 +9,7 @@
 	} else if (typeof module !== 'undefined' && module.exports){
 		module.exports = factory();
 	} else {
-		this.emitter = factory();
+		this.primish = factory();
 	}
 }).call(this, function(){
 	var hasOwnProperty = Object.hasOwnProperty,
@@ -158,7 +158,7 @@
 	};
 
 	// main
-	var prime = function(proto){
+	var primish = function(proto){
 		var superclass = proto.extend;
 		// if our nice proto object has no own constructor property
 		// then we proceed using a ghosting constructor that all it does is
@@ -204,13 +204,16 @@
 	};
 
 	// exports
-	prime.has = has;
-	prime.each = each;
-	prime.merge = merge;
+	primish.has = has;
+	primish.each = each;
+	primish.merge = merge;
 
 	// prime.create is Object.create polyfill
-	prime.create = create;
-	prime.define = defineProperty;
+	primish.create = create;
+	primish.define = defineProperty;
+	primish.hide = function(obj, prop){
+		return obj[prop] = obj[prop] || {}, defineProperty(obj, prop, {enumerable: false, value: obj[prop]}), obj[prop];
+	};
 
-	return prime;
+	return primish;
 });
