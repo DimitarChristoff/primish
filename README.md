@@ -52,9 +52,9 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 To create a new Class, you simply need to do:
 
 ```ace
-require(['primish/primish'], function(prime){
+require(['primish/primish'], function(primish){
 
-	var Human = prime({
+	var Human = primish({
 		setName: function(name){
 			this.name = name;
 		},
@@ -73,9 +73,9 @@ require(['primish/primish'], function(prime){
 You can also add a constructor method on your config object to run automatically:
 
 ```ace
-require(['primish/primish'], function(prime){
+require(['primish/primish'], function(primish){
 
-	var Human = prime({
+	var Human = primish({
 		constructor: function(name){
 			name && this.setName(name);
 		},
@@ -96,13 +96,13 @@ require(['primish/primish'], function(prime){
 Here is an example that will make the name property `readonly` and  example private variables
 
 ```ace
-require(['primish/primish'], function(prime){
+require(['primish/primish'], function(primish){
 
     var Human = (function(){
         var storage = {},
             hid = 0;
 
-        var Human = prime({
+        var Human = primish({
             constructor: function(name){
                 this.$hid = hid++;
                 storage[this.$hid] = {};
@@ -158,13 +158,13 @@ The `constructor` method in your config object is what becomes the prime constru
 instantiate and can accept any number of arguments, named or otherwise.
 
 ```ace
-require(['primish/primish'], function(prime){
+require(['primish/primish'], function(primish){
 	// have an element
 	var div = document.createElement('div');
 	div.setAttribute('id', 'myWidget');
 	document.body.appendChild(div);
 
-	var Widget = prime({
+	var Widget = primish({
 		options: {
 			title: 'My Widget'
 		},
@@ -194,7 +194,7 @@ string ID, which can then be accessed via `instance._id`. When possible, these a
 are not enumerable.
 
 ```ace
-require(['primish/primish'], function(prime){
+require(['primish/primish'], function(primish){
 
 	var User = primish('Admin.User', {
 		constructor: function(){
@@ -219,8 +219,8 @@ any of its static properties and methods via the scope chain.
 This allows you to abstract differences between Classes without having to repeat a lot of code.
 
 ```ace
-require(['primish/primish'], function(prime){
-	var Rectangle = prime({
+require(['primish/primish'], function(primish){
+	var Rectangle = primish({
 
 		constructor: function(width, height){
 			return this.setwidth(width).setHeight(height);
@@ -242,7 +242,7 @@ require(['primish/primish'], function(prime){
 
 	});
 
-	var Square = prime({
+	var Square = primish({
 
 		// subclass of Rectangle
 		extend: Rectangle,
@@ -294,15 +294,15 @@ square.height; // 4
 it will automatically merge them for you. This is really helpful when using the [options](#plugins/options) mixin:
 
 ```javascript
-require(['primish/primish'], function(prime){
-	var a = prime({
+require(['primish/primish'], function(primish){
+	var a = primish({
 		options: {
 			x: 1,
 			y: 1
 		}
 	});
 
-	var b = prime({
+	var b = primish({
 		extend: a,
 		options: {
 			z: 1
@@ -321,11 +321,11 @@ definition. Mixins do not work via inheritance, they create a local instance of 
 When used as a property, `implement` accepts either a single Class or an array of Classes to implement.
 
 ```ace
-require(['primish/primish'], function(prime){
+require(['primish/primish'], function(primish){
 	// example using a small event emitter as a mixin
 	var EID = 0;
 
-	var Emitter = prime({
+	var Emitter = primish({
 
 		on: function(event, fn){
 			var listeners = this._listeners || (this._listeners = {}),
@@ -348,7 +348,7 @@ require(['primish/primish'], function(prime){
 
 	});
 
-	var myClass = prime({
+	var myClass = primish({
 
 		// implement the emitter:
 		implement: [Emitter],
@@ -379,7 +379,7 @@ myClass.implement(new OtherClass());
 instanceofMyClass.implement(new OtherClass2()).implement(new OtherClass3());
 
 // late binding at proto definition also works
-var myClass = prime({}).implement(new OtherClass);
+var myClass = primish({}).implement(new OtherClass);
 ```
 
 <div class="alert">Note: When a mixin is implemented, the mixin Class is instantiated (via `new`) and the methods are copied from
@@ -399,11 +399,11 @@ The parent method is borrowed from Arian's prime-util repo.
 Here is a more comprehensive example:
 
 ```ace
-require(['primish/primish'], function(prime){
+require(['primish/primish'], function(primish){
 	// this example won't work w/o jQuery and ECMA5
 	// assume this.$element is a jquery wrapped el.
 
-	var Widget = prime({
+	var Widget = primish({
 
 		attachEvents: function(){
 			this.$element.on('click', this.handleclick.bind(this));
@@ -417,7 +417,7 @@ require(['primish/primish'], function(prime){
 
 	});
 
-	var WeatherWidget = prime({
+	var WeatherWidget = primish({
 
 		extend: Widget,
 
@@ -433,7 +433,7 @@ require(['primish/primish'], function(prime){
 	});
 
 	// example with shifting arguments
-	var NewsWidget = prime({
+	var NewsWidget = primish({
 
 		extend: Widget,
 
@@ -453,8 +453,8 @@ Define is a micro polyfill to `Object.defineProperty` - see [MDN](https://develo
 This allows you to have read-only properties of objects, or private getters/setters. Example use
 
 ```ace
-require(['primish/primish'], function(prime){
-	var Human = prime({
+require(['primish/primish'], function(primish){
+	var Human = primish({
 
 		constructor: function(name){
 			this.name = name;
@@ -500,14 +500,14 @@ By default, the scope of `this` in any event callback function will be the objec
 #### Using events
 
 ```ace
-require(['primish/primish', 'primish/emitter'], function(prime, emitter){
+require(['primish/primish', 'primish/emitter'], function(primish, emitter){
 	// this example won't run w/o ECMA5 Function.prototype.bind
 
-	var someController = new (prime({
+	var someController = new (primish({
 		implement: [emitter]
 	}))();
 
-	var Human = prime({
+	var Human = primish({
 		implement: [Emitter],
 		constructor: function(){
 			this.attachEvents();
@@ -551,8 +551,8 @@ require(['primish/primish', 'primish/emitter'], function(prime, emitter){
 You can also use **named anonymous functions** to remove your own event in a hurry:
 
 ```ace
-require(['primish/primish', 'primish/emitter'], function(prime, emitter){
-	var Human = prime({
+require(['primish/primish', 'primish/emitter'], function(primish, emitter){
+	var Human = primish({
 		implement: [emitter],
 		constructor: function(){
 			this.on('hi', function hiEvent(){
@@ -594,7 +594,7 @@ By default, emitter ships with `once` pre-defined - which will run an event call
 It exposes an API to define custom pseudos on the emitter object.
 
 ```ace
-require(['primish/primish', 'primish/emitter'], function(prime, emitter){
+require(['primish/primish', 'primish/emitter'], function(primish, emitter){
 
     var user = {
         role: 'tester'
@@ -638,8 +638,8 @@ require(['primish/primish', 'primish/emitter'], function(prime, emitter){
 A small utility mixin from Arian's prime-util that allows easy object merge of an Object into `this.object` from right to left. If emitter is also mixed-in, it will automatically add events prefixed by `on` and camelcased, eg, `onReady: function(){}`.
 
 ```ace
-require(['primish/primish', 'primish/emitter', 'primish/options'], function(prime, emitter, options){
-	var Human = prime({
+require(['primish/primish', 'primish/emitter', 'primish/options'], function(primish, emitter, options){
+	var Human = primish({
 		options: {
 			name: 'unknown'
 		},
@@ -692,7 +692,7 @@ Then to access it in a nodejs script:
 var prime = require('primish'),
 	emitter = require('primish/emitter');
 
-var foo = prime({
+var foo = primish({
 
 	implement: emitter
 
@@ -700,10 +700,8 @@ var foo = prime({
 
 ```
 
-Use at your own risk, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
+Have fun, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
 Most examples in the docs are runnable, just edit the code and press `run this`, then look at your console.
-
-You are still advised to use `prime`, `primish` will be kept reasonably upto date but it will not be merging with the prime remote. Changes to prime itself may be re-implemented and pushed through primish if they don't break any existing functionality.
 
 ## License
 

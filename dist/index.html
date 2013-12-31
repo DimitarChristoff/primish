@@ -85,9 +85,9 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 <p><img src="http://cdn.meme.li/instances/300x300/39768609.jpg" alt="our own"></p>
 <h2 id="creating-a-class">Creating a Class</h2>
 <p>To create a new Class, you simply need to do:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
 
-    var Human = prime({
+    var Human = primish({
         setName: function(name){
             this.name = name;
         },
@@ -102,9 +102,9 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 
 });</code></pre>
 <p>You can also add a constructor method on your config object to run automatically:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
 
-    var Human = prime({
+    var Human = primish({
         constructor: function(name){
             name &amp;&amp; this.setName(name);
         },
@@ -121,13 +121,13 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
 
 });</code></pre>
 <p>Here is an example that will make the name property <code>readonly</code> and  example private variables</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
 
     var Human = (function(){
         var storage = {},
             hid = 0;
 
-        var Human = prime({
+        var Human = primish({
             constructor: function(name){
                 this.$hid = hid++;
                 storage[this.$hid] = {};
@@ -176,13 +176,13 @@ following keys in your config object are considered <code>mutator</code>:</p>
 <h3 id="creating-a-class/constructor">constructor</h3>
 <p>The <code>constructor</code> method in your config object is what becomes the prime constructor. It runs automatically when you
 instantiate and can accept any number of arguments, named or otherwise.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
     // have an element
     var div = document.createElement(&#39;div&#39;);
     div.setAttribute(&#39;id&#39;, &#39;myWidget&#39;);
     document.body.appendChild(div);
 
-    var Widget = prime({
+    var Widget = primish({
         options: {
             title: &#39;My Widget&#39;
         },
@@ -207,7 +207,7 @@ instantiate and can accept any number of arguments, named or otherwise.</p>
 <p>Primish also supports Class IDs (for &#39;reflection&#39;) - similar to AMD&#39;s module IDs. The first argument can be an optional
 string ID, which can then be accessed via <code>instance._id</code>. When possible, these are added via <code>Object.defineProperty</code> and
 are not enumerable.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
 
     var User = primish(&#39;Admin.User&#39;, {
         constructor: function(){
@@ -225,8 +225,8 @@ and may incorrectly identify your instance as the parent. Make sure you use IDs 
 pointing to another Class. The resulting new Class definition will have its prototype set to the SuperClass and inherit
 any of its static properties and methods via the scope chain.</p>
 <p>This allows you to abstract differences between Classes without having to repeat a lot of code.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
-    var Rectangle = prime({
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
+    var Rectangle = primish({
 
         constructor: function(width, height){
             return this.setwidth(width).setHeight(height);
@@ -248,7 +248,7 @@ any of its static properties and methods via the scope chain.</p>
 
     });
 
-    var Square = prime({
+    var Square = primish({
 
         // subclass of Rectangle
         extend: Rectangle,
@@ -293,15 +293,15 @@ square.width; // 4;
 square.height; // 4</code></pre>
 <p><strong>Warning</strong>: when creating a new sub class, if you have an <code>options</code> object in the constructor and the super class also has it,
 it will automatically merge them for you. This is really helpful when using the <a href="#plugins/options">options</a> mixin:</p>
-<pre class="prettyprint linenums"><code class="lang-javascript">require([&#39;primish/primish&#39;], function(prime){
-    var a = prime({
+<pre class="prettyprint linenums"><code class="lang-javascript">require([&#39;primish/primish&#39;], function(primish){
+    var a = primish({
         options: {
             x: 1,
             y: 1
         }
     });
 
-    var b = prime({
+    var b = primish({
         extend: a,
         options: {
             z: 1
@@ -314,11 +314,11 @@ it will automatically merge them for you. This is really helpful when using the 
 <p>The special key <code>implement</code> is used to tell prime which other Objects&#39; properties are to be <code>copied</code> into your own Class
 definition. Mixins do not work via inheritance, they create a local instance of the properties.</p>
 <p>When used as a property, <code>implement</code> accepts either a single Class or an array of Classes to implement.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
     // example using a small event emitter as a mixin
     var EID = 0;
 
-    var Emitter = prime({
+    var Emitter = primish({
 
         on: function(event, fn){
             var listeners = this._listeners || (this._listeners = {}),
@@ -341,7 +341,7 @@ definition. Mixins do not work via inheritance, they create a local instance of 
 
     });
 
-    var myClass = prime({
+    var myClass = primish({
 
         // implement the emitter:
         implement: [Emitter],
@@ -368,7 +368,7 @@ definition. Mixins do not work via inheritance, they create a local instance of 
 instanceofMyClass.implement(new OtherClass2()).implement(new OtherClass3());
 
 // late binding at proto definition also works
-var myClass = prime({}).implement(new OtherClass);</code></pre>
+var myClass = primish({}).implement(new OtherClass);</code></pre>
 <p><div class="alert">Note: When a mixin is implemented, the mixin Class is instantiated (via <code>new</code>) and the methods are copied from
 the instance, not the prototype. Changing the mixin prototype afterwards will not automatically make the changes available
 in your Class instances (unlike when using <a href="#creating-a-class/extend">extend</a>)</div></p>
@@ -378,11 +378,11 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 <p><code>this.constructor.prototype.methodname.apply(this, [arguments])</code>, where methodname is the method passed as string.</p>
 <p>The parent method is borrowed from Arian&#39;s prime-util repo.</p>
 <p>Here is a more comprehensive example:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
     // this example won&#39;t work w/o jQuery and ECMA5
     // assume this.$element is a jquery wrapped el.
 
-    var Widget = prime({
+    var Widget = primish({
 
         attachEvents: function(){
             this.$element.on(&#39;click&#39;, this.handleclick.bind(this));
@@ -396,7 +396,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 
     });
 
-    var WeatherWidget = prime({
+    var WeatherWidget = primish({
 
         extend: Widget,
 
@@ -412,7 +412,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
     });
 
     // example with shifting arguments
-    var NewsWidget = prime({
+    var NewsWidget = primish({
 
         extend: Widget,
 
@@ -426,8 +426,8 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 <h2 id="define">Define</h2>
 <p>Define is a micro polyfill to <code>Object.defineProperty</code> - see <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN</a>. It works in conjunction with <code>Object.getOwnPropertyDescriptor</code>, which is also shimmed for older browsers.</p>
 <p>This allows you to have read-only properties of objects, or private getters/setters. Example use</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
-    var Human = prime({
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
+    var Human = primish({
 
         constructor: function(name){
             this.name = name;
@@ -466,14 +466,14 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 </ul>
 <p>By default, the scope of <code>this</code> in any event callback function will be the object that fired it, not the subscriber. If you want to keep scope bound to your local instance, you need to use <code>Function.prototype.bind</code> (if ES5Shim is being used) or <code>_.bind</code> (lodash or underscore), which is probably safer.</p>
 <h4 id="using-events">Using events</h4>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(primish, emitter){
     // this example won&#39;t run w/o ECMA5 Function.prototype.bind
 
-    var someController = new (prime({
+    var someController = new (primish({
         implement: [emitter]
     }))();
 
-    var Human = prime({
+    var Human = primish({
         implement: [Emitter],
         constructor: function(){
             this.attachEvents();
@@ -513,8 +513,8 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
     }, 1000);
 });</code></pre>
 <p>You can also use <strong>named anonymous functions</strong> to remove your own event in a hurry:</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
-    var Human = prime({
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(primish, emitter){
+    var Human = primish({
         implement: [emitter],
         constructor: function(){
             this.on(&#39;hi&#39;, function hiEvent(){
@@ -544,7 +544,7 @@ model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create e
 <p>Emitter supports <code>pseudo events</code>, similar in style to CSS pseudos. For instance: <code>load:once</code> is a <code>load</code> event with a <code>once</code> pseudo.</p>
 <p>By default, emitter ships with <code>once</code> pre-defined - which will run an event callback once only, then unbind itself.</p>
 <p>It exposes an API to define custom pseudos on the emitter object.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(prime, emitter){
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(primish, emitter){
 
     var user = {
         role: &#39;tester&#39;
@@ -583,8 +583,8 @@ model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create e
 });</code></pre>
 <h3 id="plugins/options">options</h3>
 <p>A small utility mixin from Arian&#39;s prime-util that allows easy object merge of an Object into <code>this.object</code> from right to left. If emitter is also mixed-in, it will automatically add events prefixed by <code>on</code> and camelcased, eg, <code>onReady: function(){}</code>.</p>
-<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;, &#39;primish/options&#39;], function(prime, emitter, options){
-    var Human = prime({
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;, &#39;primish/options&#39;], function(primish, emitter, options){
+    var Human = primish({
         options: {
             name: &#39;unknown&#39;
         },
@@ -624,14 +624,13 @@ $ python -m SimpleHTTPServer
 <pre class="prettyprint linenums"><code class="lang-javascript">var prime = require(&#39;primish&#39;),
     emitter = require(&#39;primish/emitter&#39;);
 
-var foo = prime({
+var foo = primish({
 
     implement: emitter
 
 }); // etc.</code></pre>
-<p>Use at your own risk, examples in <code>./examples/</code> and also look at the <code>spec</code> folder (jasmine-node test runner).
+<p>Have fun, examples in <code>./examples/</code> and also look at the <code>spec</code> folder (jasmine-node test runner).
 Most examples in the docs are runnable, just edit the code and press <code>run this</code>, then look at your console.</p>
-<p>You are still advised to use <code>prime</code>, <code>primish</code> will be kept reasonably upto date but it will not be merging with the prime remote. Changes to prime itself may be re-implemented and pushed through primish if they don&#39;t break any existing functionality.</p>
 <h2 id="license">License</h2>
 <p>Use as you deem fit under the original <a href="https://github.com/mootools/prime/blob/master/package.json#L23">MIT license</a> for prime. Primish brings little on top of the work of the MooTools team. The documentation and examples are not covered by the license and may need to be changed.</p>
 
