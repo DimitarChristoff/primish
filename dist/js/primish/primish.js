@@ -158,7 +158,13 @@
 	};
 
 	// main
-	var primish = function(proto){
+	var primish = function(id, proto){
+
+		if (typeof id === 'object'){
+			proto = id;
+			id = undefined;
+		}
+
 		var superclass = proto.extend;
 		// if our nice proto object has no own constructor property
 		// then we proceed using a ghosting constructor that all it does is
@@ -198,6 +204,11 @@
 
 		// copy mixin (this should never change)
 		constructor.implement = implement;
+
+		id && constructor.define('_id', {
+			value: id,
+			enumerable: false
+		});
 
 		// finally implement proto and return constructor
 		return constructor.implement(proto);

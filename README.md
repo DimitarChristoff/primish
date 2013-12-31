@@ -17,7 +17,8 @@ Why fork prime in the first place? Well... prime is very good. But it is written
 - object keys of constructor object are NOT dereferenced / cloned
 - only `options` key is merged with supers, not other objects
 - extras from prime like utils, shell, type, etc have all been removed, recommended util library is `lodash`
- 
+- primish classes can have IDs for reflection like in AMD.
+
 ### emitter changes
 
 - `.emit` is actually `.trigger`, so it's not an `emitter` as such :)
@@ -185,6 +186,29 @@ require(['primish/primish'], function(prime){
 	console.log(instance.element.innerHTML); // 'Cool Widget'
 });
 ```
+
+#### class IDs
+
+Primish also supports Class IDs (for 'reflection') - similar to AMD's module IDs. The first argument can be an optional
+string ID, which can then be accessed via `instance._id`. When possible, these are added via `Object.defineProperty` and
+are not enumerable.
+
+```ace
+require(['primish/primish'], function(prime){
+
+	var User = primish('Admin.User', {
+		constructor: function(){
+			console.log(this._id);
+		}
+	});
+
+	var instance = new User();
+	console.log('It looks like the instance is ' + instance._id);
+});
+```
+
+Caveat: if your super Class has an ID but your subclass does not, it will still resolve this via the prototype chain
+and may incorrectly identify your instance as the parent. Make sure you use IDs recursively if you need them.
 
 ### extend
 

@@ -30,6 +30,32 @@ describe('Creating prototypes', function(){
 	});
 });
 
+describe('Should be able to assign ids to classes', function(){
+
+	it('Should accept an id and make a prime', function(){
+		var User = primish('User', {
+			constructor: function(){
+
+			}
+		});
+
+		var user = new User();
+		expect(user._id).toBe('User');
+	});
+
+	it('Class id should be immutable and not enumerable', function(){
+		var User = primish('User', {
+			constructor: function(){
+
+			}
+		});
+
+		var user = new User(), keys = Object.keys(user);
+
+		expect(keys.indexOf('_id')).toBe(-1);
+	});
+});
+
 describe('Calling `constructor` automatically', function(){
 
 	var obj = {

@@ -58,6 +58,7 @@
 <li>object keys of constructor object are NOT dereferenced / cloned</li>
 <li>only <code>options</code> key is merged with supers, not other objects</li>
 <li>extras from prime like utils, shell, type, etc have all been removed, recommended util library is <code>lodash</code></li>
+<li>primish classes can have IDs for reflection like in AMD.</li>
 </ul>
 <h3 id="differences/emitter-changes">emitter changes</h3>
 <ul>
@@ -202,6 +203,23 @@ instantiate and can accept any number of arguments, named or otherwise.</p>
     console.log(instance.options.title); // &#39;Cool Widget&#39;
     console.log(instance.element.innerHTML); // &#39;Cool Widget&#39;
 });</code></pre>
+<h4 id="class-ids">class IDs</h4>
+<p>Primish also supports Class IDs (for &#39;reflection&#39;) - similar to AMD&#39;s module IDs. The first argument can be an optional
+string ID, which can then be accessed via <code>instance._id</code>. When possible, these are added via <code>Object.defineProperty</code> and
+are not enumerable.</p>
+<pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(prime){
+
+    var User = primish(&#39;Admin.User&#39;, {
+        constructor: function(){
+            console.log(this._id);
+        }
+    });
+
+    var instance = new User();
+    console.log(&#39;It looks like the instance is &#39; + instance._id);
+});</code></pre>
+<p>Caveat: if your super Class has an ID but your subclass does not, it will still resolve this via the prototype chain
+and may incorrectly identify your instance as the parent. Make sure you use IDs recursively if you need them.</p>
 <h3 id="creating-a-class/extend">extend</h3>
 <p>The special key <code>extend</code> defines what SuperClass your new Class will inherit from. It only accepts a single argument,
 pointing to another Class. The resulting new Class definition will have its prototype set to the SuperClass and inherit
