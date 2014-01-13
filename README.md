@@ -223,7 +223,7 @@ require(['primish/primish'], function(primish){
 	var Rectangle = primish({
 
 		constructor: function(width, height){
-			return this.setwidth(width).setHeight(height);
+			return this.setWidth(width).setHeight(height);
 		},
 
 		setWidth: function(width){
