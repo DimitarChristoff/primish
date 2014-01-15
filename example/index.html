@@ -11,7 +11,7 @@ Look at your console. This is a pure browser implementation
 	(function(){
 		'use strict';
 
-		var Human = prime({
+		var Human = primish({
 			constructor: function(name){
 				this.dob = (new Date()).getTime();
 				this.name = name || 'unknown';
@@ -27,7 +27,7 @@ Look at your console. This is a pure browser implementation
 
 		});
 
-		var Ninja = prime({
+		var Ninja = primish({
 
 			extend: Human,
 

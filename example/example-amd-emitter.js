@@ -28,7 +28,7 @@ define(function(require){
 		extend: Human,
 
 		constructor: function(name, rank){
-			this.constructor.parent.constructor.call(this, name);
+			this.parent('constructor', name);
 			this.setRank(rank || 'Academy');
 		},
 
