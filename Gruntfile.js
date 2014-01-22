@@ -67,6 +67,21 @@ module.exports = function(grunt){
 					}
 				}
 			}
+		},
+
+		requirejs: {
+			build: {
+				options: {
+					optimize: 'uglify2',
+					out: './primish-min.js',
+					// build all cept for components
+					include: [
+						'primish',
+						'options',
+						'emitter'
+					]
+				}
+			},
 		}
 
 	});
@@ -74,6 +89,6 @@ module.exports = function(grunt){
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
 	// By default, clean and generate docs
-	grunt.registerTask('default', ['clean','doctor']);
+	grunt.registerTask('default', ['clean','doctor', 'requirejs:build']);
 	grunt.registerTask('test', ['jshint']);
 };
