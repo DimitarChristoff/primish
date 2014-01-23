@@ -36,7 +36,7 @@ Why fork prime in the first place? Well... prime is very good. But it is written
 
 The main driving force behind primish is to change prime to work in a browser out of the box as well as under nodejs.
 This fork changes the code to work via an UMD wrap w/o any dependencies, so it supports AMD (eg. RequireJS, Almond) as
-well as simple browser exports to gloabls. If you don't have an AMD loader and not under NodeJS / browserify, it will
+well as simple browser exports to globals. If you don't have an AMD loader and not under NodeJS / browserify, it will
 export `window.primish`, `window.emitter` and `window.options`, so be careful. Another goal has been to bring as much
 MooTools 1.x sugar into classes as possible.
 
