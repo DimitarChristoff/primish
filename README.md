@@ -44,7 +44,7 @@ MooTools 1.x sugar into classes as possible.
 
 The minified packaged version weighs just 4.2K without gzipping, so a tiny footprint in any codebase.
 
-<a class="btn btn-large btn-primary" rel="download" target="_blank" href="/js/primish/primish-min.js">primish-min.js (4.2k)</a>
+<a class="btn btn-large btn-primary" rel="download" target="_blank" href="./js/primish/primish-min.js">primish-min.js (4.2k)</a>
 
 ### Changelog
 
