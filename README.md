@@ -32,13 +32,21 @@ Why fork prime in the first place? Well... prime is very good. But it is written
 - `.setOptions()` - shallow merging of object with `this.options`
 - support for emitter events via `onEventname` -> `this.on('eventname')` like in MooTools 1.x
 
-### browser support
+### Browser support
 
 The main driving force behind primish is to change prime to work in a browser out of the box as well as under nodejs.
-This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don't have an AMD loader and not under NodeJS / browserify, it will export `window.prime`, `window.emitter` and `window.options`,
-so be careful. Another goal has been to bring as much MooTools 1.x sugar into classes as possible.
+This fork changes the code to work via an UMD wrap w/o any dependencies, so it supports AMD (eg. RequireJS, Almond) as
+well as simple browser exports to gloabls. If you don't have an AMD loader and not under NodeJS / browserify, it will
+export `window.primish`, `window.emitter` and `window.options`, so be careful. Another goal has been to bring as much
+MooTools 1.x sugar into classes as possible.
 
-### changelog
+### Size and download
+
+The minified packaged version weighs just 4.2K without gzipping, so a tiny footprint in any codebase.
+
+<a class="btn btn-large btn-primary" rel="download" target="_blank" href="/js/primish/primish-min.js">primish-min.js (4.2k)</a>
+
+### Changelog
 
 - 0.3.3 requirejs 2.1.10 compatible bundles support via module ids
 - 0.3.2 requirejs uglify2 build
@@ -665,21 +673,29 @@ require(['primish/primish', 'primish/emitter', 'primish/options'], function(prim
 });
 ```
 
-## Setup
+## contributing
+
+To install locally, clone the repo and setup:
 
 ```sh
+$ git clone https://github.com/dimitarchristoff/primish.git
+$ cd primish/
+
 # pull the deps
 $ npm install
 
 # run the tests
 $ npm test
 
-# generate docs
+# generate docs and make a new build
 $ npm install -g grunt-cli
 $ grunt
 $ cd dist
 $ python -m SimpleHTTPServer
-# go to http://localhost:8000
+$ open http://localhost:8000
+
+# just generate a new build
+$ grunt requirejs:build
 ```
 
 ## npm usage
@@ -687,7 +703,7 @@ $ python -m SimpleHTTPServer
 You can install it via npm by simply doing:
 
 ```sh
-npm install primish --save
+$ npm install primish --save
 ```
 
 Then to access it in a nodejs script:
@@ -701,7 +717,6 @@ var foo = primish({
 	implement: emitter
 
 }); // etc.
-
 ```
 
 ## bower usage

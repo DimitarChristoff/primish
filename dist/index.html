@@ -21,7 +21,7 @@
 		</div>
 		<div class="separator"></div>
 	
-	<ul id="sections"><li class="l2"><a href="#differences">Differences</a><ul><li class="l3"><a href="#differences/prime-changes">prime changes</a></li><li class="l3"><a href="#differences/emitter-changes">emitter changes</a></li><li class="l3"><a href="#differences/options">options</a></li><li class="l3"><a href="#differences/browser-support">browser support</a></li><li class="l3"><a href="#differences/changelog">changelog</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/implement">implement</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li><li class="l2"><a href="#bower-usage">bower usage</a></li><li class="l2"><a href="#requirejs-usage">RequireJS usage</a></li><li class="l2"><a href="#license">License</a></li></ul>
+	<ul id="sections"><li class="l2"><a href="#differences">Differences</a><ul><li class="l3"><a href="#differences/prime-changes">prime changes</a></li><li class="l3"><a href="#differences/emitter-changes">emitter changes</a></li><li class="l3"><a href="#differences/options">options</a></li><li class="l3"><a href="#differences/browser-support">Browser support</a></li><li class="l3"><a href="#differences/size-and-download">Size and download</a></li><li class="l3"><a href="#differences/changelog">Changelog</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/implement">implement</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#contributing">contributing</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li><li class="l2"><a href="#bower-usage">bower usage</a></li><li class="l2"><a href="#requirejs-usage">RequireJS usage</a></li><li class="l2"><a href="#license">License</a></li></ul>
 	<div class="separator"></div>
 	
 		<div class="extra" id="github">
@@ -73,11 +73,16 @@
 <li><code>.setOptions()</code> - shallow merging of object with <code>this.options</code></li>
 <li>support for emitter events via <code>onEventname</code> -&gt; <code>this.on(&#39;eventname&#39;)</code> like in MooTools 1.x</li>
 </ul>
-<h3 id="differences/browser-support">browser support</h3>
+<h3 id="differences/browser-support">Browser support</h3>
 <p>The main driving force behind primish is to change prime to work in a browser out of the box as well as under nodejs.
-This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don&#39;t have an AMD loader and not under NodeJS / browserify, it will export <code>window.prime</code>, <code>window.emitter</code> and <code>window.options</code>,
-so be careful. Another goal has been to bring as much MooTools 1.x sugar into classes as possible.</p>
-<h3 id="differences/changelog">changelog</h3>
+This fork changes the code to work via an UMD wrap w/o any dependencies, so it supports AMD (eg. RequireJS, Almond) as
+well as simple browser exports to gloabls. If you don&#39;t have an AMD loader and not under NodeJS / browserify, it will
+export <code>window.primish</code>, <code>window.emitter</code> and <code>window.options</code>, so be careful. Another goal has been to bring as much
+MooTools 1.x sugar into classes as possible.</p>
+<h3 id="differences/size-and-download">Size and download</h3>
+<p>The minified packaged version weighs just 4.2K without gzipping, so a tiny footprint in any codebase.</p>
+<p><a class="btn btn-large btn-primary" rel="download" target="_blank" href="/js/primish/primish-min.js">primish-min.js (4.2k)</a></p>
+<h3 id="differences/changelog">Changelog</h3>
 <ul>
 <li>0.3.3 requirejs 2.1.10 compatible bundles support via module ids</li>
 <li>0.3.2 requirejs uglify2 build</li>
@@ -105,7 +110,8 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
     Bob.setName(&#39;Bob&#39;);
     console.log(Bob.getName()); // &#39;Bob&#39;
 
-});</code></pre>
+});
+</code></pre>
 <p>You can also add a constructor method on your config object to run automatically:</p>
 <pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
 
@@ -124,7 +130,8 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
     var Bob = new Human(&#39;Bob&#39;);
     console.log(Bob.getName()); // &#39;Bob&#39;
 
-});</code></pre>
+});
+</code></pre>
 <p>Here is an example that will make the name property <code>readonly</code> and  example private variables</p>
 <pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;], function(primish){
 
@@ -173,7 +180,8 @@ so be careful. Another goal has been to bring as much MooTools 1.x sugar into cl
     Bob.$uid = Greg.$uid; // try to puncture Greg&#39;s storage
     console.log(Bob.name); // &#39;Bob&#39;
 
-});</code></pre>
+});
+</code></pre>
 <p>What happens behind the scenes? <code>prime</code> accepts a single argument as a config object. The object is a simple JavaScript
 Object - with special keys (also referred to <code>mutator keys</code>).</p>
 <p>A <code>mutator key</code> is a key:value pair that has a special meaning and is used differently by the Class constructor. The
@@ -207,7 +215,8 @@ instantiate and can accept any number of arguments, named or otherwise.</p>
 
     console.log(instance.options.title); // &#39;Cool Widget&#39;
     console.log(instance.element.innerHTML); // &#39;Cool Widget&#39;
-});</code></pre>
+});
+</code></pre>
 <h4 id="class-ids">class IDs</h4>
 <p>Primish also supports Class IDs (for &#39;reflection&#39;) - similar to AMD&#39;s module IDs. The first argument can be an optional
 string ID, which can then be accessed via <code>instance._id</code>. When possible, these are added via <code>Object.defineProperty</code> and
@@ -222,7 +231,8 @@ are not enumerable.</p>
 
     var instance = new User();
     console.log(&#39;It looks like the instance is &#39; + instance._id);
-});</code></pre>
+});
+</code></pre>
 <p>Caveat: if your super Class has an ID but your subclass does not, it will still resolve this via the prototype chain
 and may incorrectly identify your instance as the parent. Make sure you use IDs recursively if you need them.</p>
 <h3 id="creating-a-class/extend">extend</h3>
@@ -282,7 +292,8 @@ any of its static properties and methods via the scope chain.</p>
     square.setWidth(5); // local
     console.log(square.height); // 5
     console.log(square.squareRoot()); // from parent proto of Rectangle, 25
-});</code></pre>
+});
+</code></pre>
 <p>Changes to the parent Class are also reflected in the child Class by inheritance (unless the child has a local
 implementation). This differs from when you use the <a href="#creating-a-class/implement">implement</a> directives, which copies instead.</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">// continued from above
@@ -295,7 +306,8 @@ Rectangle.prototype.shrink = function(){
 // square can also now call .shrink:
 square.setSide(5).shrink();
 square.width; // 4;
-square.height; // 4</code></pre>
+square.height; // 4
+</code></pre>
 <p><strong>Warning</strong>: when creating a new sub class, if you have an <code>options</code> object in the constructor and the super class also has it,
 it will automatically merge them for you. This is really helpful when using the <a href="#plugins/options">options</a> mixin:</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">require([&#39;primish/primish&#39;], function(primish){
@@ -314,7 +326,8 @@ it will automatically merge them for you. This is really helpful when using the 
     });
 
     console.log(new b().options);  // {x:1, y:1, z:1}
-});</code></pre>
+});
+</code></pre>
 <h3 id="creating-a-class/implement">implement</h3>
 <p>The special key <code>implement</code> is used to tell prime which other Objects&#39; properties are to be <code>copied</code> into your own Class
 definition. Mixins do not work via inheritance, they create a local instance of the properties.</p>
@@ -366,14 +379,16 @@ definition. Mixins do not work via inheritance, they create a local instance of 
 
     // call the method that will fire the event.
     instance.doSomethingImportant();
-});</code></pre>
+});
+</code></pre>
 <p>There is an alternative syntax to allow <code>late implementation</code> via the <code>.mixin</code> method:</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">myClass.implement(new OtherClass());
 // or chaining on an instance
 instanceofMyClass.implement(new OtherClass2()).implement(new OtherClass3());
 
 // late binding at proto definition also works
-var myClass = primish({}).implement(new OtherClass);</code></pre>
+var myClass = primish({}).implement(new OtherClass);
+</code></pre>
 <p><div class="alert">Note: When a mixin is implemented, the mixin Class is instantiated (via <code>new</code>) and the methods are copied from
 the instance, not the prototype. Changing the mixin prototype afterwards will not automatically make the changes available
 in your Class instances (unlike when using <a href="#creating-a-class/extend">extend</a>)</div></p>
@@ -427,7 +442,8 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
         }
 
     });
-});</code></pre>
+});
+</code></pre>
 <h2 id="define">Define</h2>
 <p>Define is a micro polyfill to <code>Object.defineProperty</code> - see <a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty">MDN</a>. It works in conjunction with <code>Object.getOwnPropertyDescriptor</code>, which is also shimmed for older browsers.</p>
 <p>This allows you to have read-only properties of objects, or private getters/setters. Example use</p>
@@ -460,7 +476,8 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
     console.info(Bob.name);
     console.assert(Bob.name === &#39;Bob&#39;);
 
-});</code></pre>
+});
+</code></pre>
 <h2 id="plugins">Plugins</h2>
 <h3 id="plugins/emitter">emitter</h3>
 <p>The Emitter class can work either as a <a href="#creating-a-class/implement">mixin</a> or as a standalone Class instance. It provides any Class that uses it with 3 methods it can call:</p>
@@ -516,7 +533,8 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
     setTimeout(function(){
         someController.trigger(&#39;fetch&#39;);
     }, 1000);
-});</code></pre>
+});
+</code></pre>
 <p>You can also use <strong>named anonymous functions</strong> to remove your own event in a hurry:</p>
 <pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;], function(primish, emitter){
     var Human = primish({
@@ -539,12 +557,14 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
 
     h.trigger(&#39;bye&#39;);
     h.trigger(&#39;bye&#39;); // won&#39;t do anything
-});</code></pre>
+});
+</code></pre>
 <p>There is also syntactic sugar available for adding more than one event to the same callback:</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">var cb = function(){
 };
 
-model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create events fire the same handler</code></pre>
+model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create events fire the same handler
+</code></pre>
 <h4 id="definepseudo">definePseudo</h4>
 <p>Emitter supports <code>pseudo events</code>, similar in style to CSS pseudos. For instance: <code>load:once</code> is a <code>load</code> event with a <code>once</code> pseudo.</p>
 <p>By default, emitter ships with <code>once</code> pre-defined - which will run an event callback once only, then unbind itself.</p>
@@ -585,7 +605,8 @@ model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create e
 
     user.role = &#39;admin&#39;;
     e.trigger(&#39;test&#39;); // test:admin cb will now run
-});</code></pre>
+});
+</code></pre>
 <h3 id="plugins/options">options</h3>
 <p>A small utility mixin from Arian&#39;s prime-util that allows easy object merge of an Object into <code>this.object</code> from right to left. If emitter is also mixed-in, it will automatically add events prefixed by <code>on</code> and camelcased, eg, <code>onReady: function(){}</code>.</p>
 <pre class="prettyprint linenums"><code class="lang-ace">require([&#39;primish/primish&#39;, &#39;primish/emitter&#39;, &#39;primish/options&#39;], function(primish, emitter, options){
@@ -608,23 +629,33 @@ model.on(&#39;change fetch create&#39;, cb); // any of change, fetch or create e
             // this.options.onReady won&#39;t be added.
         }
     });
-});</code></pre>
-<h2 id="setup">Setup</h2>
-<pre><code class="lang-sh"># pull the deps
+});
+</code></pre>
+<h2 id="contributing">contributing</h2>
+<p>To install locally, clone the repo and setup:</p>
+<pre><code class="lang-sh">$ git clone https://github.com/dimitarchristoff/primish.git
+$ cd primish/
+
+# pull the deps
 $ npm install
 
 # run the tests
 $ npm test
 
-# generate docs
+# generate docs and make a new build
 $ npm install -g grunt-cli
 $ grunt
 $ cd dist
 $ python -m SimpleHTTPServer
-# go to http://localhost:8000</code></pre>
+$ open http://localhost:8000
+
+# just generate a new build
+$ grunt requirejs:build
+</code></pre>
 <h2 id="npm-usage">npm usage</h2>
 <p>You can install it via npm by simply doing:</p>
-<pre><code class="lang-sh">npm install primish --save</code></pre>
+<pre><code class="lang-sh">$ npm install primish --save
+</code></pre>
 <p>Then to access it in a nodejs script:</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">var prime = require(&#39;primish&#39;),
     emitter = require(&#39;primish/emitter&#39;);
@@ -633,10 +664,12 @@ var foo = primish({
 
     implement: emitter
 
-}); // etc.</code></pre>
+}); // etc.
+</code></pre>
 <h2 id="bower-usage">bower usage</h2>
 <p>To install it as a bower component, simply do:</p>
-<pre><code class="lang-sh">$ bower install primish --save</code></pre>
+<pre><code class="lang-sh">$ bower install primish --save
+</code></pre>
 <h2 id="requirejs-usage">RequireJS usage</h2>
 <p>Primish is compatible with RequireJS 2.1.10 bundles. Here&#39;s an example require config that lets you use the minified primish
 file and require all sub modules later:</p>
@@ -663,7 +696,8 @@ require([
             this.setOptions(options);
         }
     });
-});</code></pre>
+});
+</code></pre>
 <p>Have fun, examples in <code>./examples/</code> and also look at the <code>spec</code> folder (jasmine-node test runner).
 Most examples in the docs are runnable, just edit the code and press <code>run this</code>, then look at your console.</p>
 <h2 id="license">License</h2>
