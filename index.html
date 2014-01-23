@@ -21,7 +21,7 @@
 		</div>
 		<div class="separator"></div>
 	
-	<ul id="sections"><li class="l2"><a href="#differences">Differences</a><ul><li class="l3"><a href="#differences/prime-changes">prime changes</a></li><li class="l3"><a href="#differences/emitter-changes">emitter changes</a></li><li class="l3"><a href="#differences/options">options</a></li><li class="l3"><a href="#differences/browser-support">browser support</a></li><li class="l3"><a href="#differences/changelog">changelog</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/implement">implement</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li><li class="l2"><a href="#license">License</a></li></ul>
+	<ul id="sections"><li class="l2"><a href="#differences">Differences</a><ul><li class="l3"><a href="#differences/prime-changes">prime changes</a></li><li class="l3"><a href="#differences/emitter-changes">emitter changes</a></li><li class="l3"><a href="#differences/options">options</a></li><li class="l3"><a href="#differences/browser-support">browser support</a></li><li class="l3"><a href="#differences/changelog">changelog</a></li></ul></li><li class="l2"><a href="#testimonials">Testimonials</a></li><li class="l2"><a href="#creating-a-class">Creating a Class</a><ul><li class="l3"><a href="#creating-a-class/constructor">constructor</a></li><li class="l3"><a href="#creating-a-class/extend">extend</a></li><li class="l3"><a href="#creating-a-class/implement">implement</a></li><li class="l3"><a href="#creating-a-class/parent">parent</a></li></ul></li><li class="l2"><a href="#define">Define</a></li><li class="l2"><a href="#plugins">Plugins</a><ul><li class="l3"><a href="#plugins/emitter">emitter</a></li><li class="l3"><a href="#plugins/options">options</a></li></ul></li><li class="l2"><a href="#setup">Setup</a></li><li class="l2"><a href="#npm-usage">npm usage</a></li><li class="l2"><a href="#bower-usage">bower usage</a></li><li class="l2"><a href="#requirejs-usage">RequireJS usage</a></li><li class="l2"><a href="#license">License</a></li></ul>
 	<div class="separator"></div>
 	
 		<div class="extra" id="github">
@@ -624,7 +624,7 @@ $ python -m SimpleHTTPServer
 # go to http://localhost:8000</code></pre>
 <h2 id="npm-usage">npm usage</h2>
 <p>You can install it via npm by simply doing:</p>
-<pre class="prettyprint linenums"><code>npm install primish --save</code></pre>
+<pre><code class="lang-sh">npm install primish --save</code></pre>
 <p>Then to access it in a nodejs script:</p>
 <pre class="prettyprint linenums"><code class="lang-javascript">var prime = require(&#39;primish&#39;),
     emitter = require(&#39;primish/emitter&#39;);
@@ -634,6 +634,36 @@ var foo = primish({
     implement: emitter
 
 }); // etc.</code></pre>
+<h2 id="bower-usage">bower usage</h2>
+<p>To install it as a bower component, simply do:</p>
+<pre><code class="lang-sh">$ bower install primish --save</code></pre>
+<h2 id="requirejs-usage">RequireJS usage</h2>
+<p>Primish is compatible with RequireJS 2.1.10 bundles. Here&#39;s an example require config that lets you use the minified primish
+file and require all sub modules later:</p>
+<pre class="prettyprint linenums"><code class="lang-javascript">require.config({
+    bundles: {
+        &#39;bower_components/primish/primish-min&#39;: [
+            &#39;primish/primish&#39;,
+            &#39;primish/emitter&#39;,
+            &#39;primish/options&#39;
+        ]
+    }
+});
+
+require([
+    &#39;primish/primish&#39;,
+    &#39;primish/options&#39;,
+    &#39;primish/emitter&#39;
+], function(primish, options, emitter){
+    // should see one HTTP request for primish-min only for either of
+    // the 3 files requested for the first time.
+    var Person = primish({
+        implement: [options, emitter],
+        constructor: function(options){
+            this.setOptions(options);
+        }
+    });
+});</code></pre>
 <p>Have fun, examples in <code>./examples/</code> and also look at the <code>spec</code> folder (jasmine-node test runner).
 Most examples in the docs are runnable, just edit the code and press <code>run this</code>, then look at your console.</p>
 <h2 id="license">License</h2>
