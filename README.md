@@ -686,7 +686,7 @@ $ python -m SimpleHTTPServer
 
 You can install it via npm by simply doing:
 
-```
+```sh
 npm install primish --save
 ```
 
@@ -702,6 +702,46 @@ var foo = primish({
 
 }); // etc.
 
+```
+
+## bower usage
+
+To install it as a bower component, simply do:
+
+```sh
+$ bower install primish --save
+```
+
+## RequireJS usage
+
+Primish is compatible with RequireJS 2.1.10 bundles. Here's an example require config that lets you use the minified primish
+file and require all sub modules later:
+
+```javascript
+require.config({
+	bundles: {
+		'bower_components/primish/primish-min': [
+			'primish/primish',
+			'primish/emitter',
+			'primish/options'
+		]
+	}
+});
+
+require([
+	'primish/primish',
+	'primish/options',
+	'primish/emitter'
+], function(primish, options, emitter){
+	// should see one HTTP request for primish-min only for either of
+	// the 3 files requested for the first time.
+	var Person = primish({
+		implement: [options, emitter],
+		constructor: function(options){
+			this.setOptions(options);
+		}
+	});
+});
 ```
 
 Have fun, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
