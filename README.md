@@ -38,6 +38,10 @@ The main driving force behind primish is to change prime to work in a browser ou
 This fork changes the code to work w/o any dependencies and support AMD (eg. RequireJS) as well as simple browser exports to gloabls. If you don't have an AMD loader and not under NodeJS / browserify, it will export `window.prime`, `window.emitter` and `window.options`,
 so be careful. Another goal has been to bring as much MooTools 1.x sugar into classes as possible.
 
+### changelog
+
+- 0.3.3 requirejs 2.1.10 compatible bundles support via module ids
+- 0.3.2 requirejs uglify2 build
 
 ## Testimonials
 

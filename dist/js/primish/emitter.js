@@ -5,7 +5,7 @@
 ;(function(factory){
 	// UMD wrap
 	if (typeof define === 'function' && define.amd){
-		define(['./primish'], factory);
+		define('primish/emitter', ['./primish'], factory);
 	} else if (typeof module !== 'undefined' && module.exports){
 		module.exports = factory(require('./primish'));
 	} else {
