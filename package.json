@@ -4,13 +4,13 @@
   "description": "A portable Class implementation in javascript, forked from MooTools Prime",
   "main": "primish.js",
   "scripts": {
-    "test": "node_modules/jasmine-node/bin/jasmine-node --runWithRequireJs --verbose spec/",
-    "autotest": "node_modules/jasmine-node/bin/jasmine-node --runWithRequireJs --autotest --verbose spec/"
+    "test": "node_modules/jasmine-node/bin/jasmine-node --verbose spec/",
+    "autotest": "node_modules/jasmine-node/bin/jasmine-node --autotest --verbose spec/"
   },
   "repository": "https://github.com/DimitarChristoff/primish",
   "license": "MIT",
   "devDependencies": {
-    "jasmine-node": "~1.7.0",
+    "jasmine-node": "~1.13.1",
     "grunt": "~0.4.1",
     "colors": "*",
     "grunt-doctor-md": "~0.0.6",
