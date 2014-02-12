@@ -1,5 +1,5 @@
 /**
- * @module primish 0.2.2 - prototypal inheritance sugar, MooTools Style
+ * @module primish 0.3.3 - prototypal inheritance sugar, MooTools Style
  * @description browser-friendly or node-js Class sugar
  **/
 ;(function(factory){
