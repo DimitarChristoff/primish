@@ -74,16 +74,15 @@ describe('Calling `constructor` automatically', function(){
 
 });
 
-describe('Constructor scope', function(){
+describe('Immediate invocation constructor scope', function(){
 
-	it('Should have a context', function(){
-		var Class = primish({
+	it('Should have a context as the instance', function(){
+		new (primish({
 			constructor: function(){
 				expect(this).not.toBeUndefined();
+				expect(this).not.toEqual(global);
 			}
-		});
-
-		new Class();
+		}))();
 	});
 });
 
