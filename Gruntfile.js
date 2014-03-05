@@ -74,6 +74,7 @@ module.exports = function(grunt){
 				options: {
 					optimize: 'uglify2',
 					out: './primish-min.js',
+					skipModuleInsertion: true,
 					// build all cept for components
 					include: [
 						'primish',
