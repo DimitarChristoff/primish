@@ -27,7 +27,7 @@
 				o;
 
 			this.options || (this.options = {});
-			o = this.options = primish.merge(this.options, options);
+			o = this.options = primish.merge(primish.clone(this.options), options);
 
 			// add the events as well, if class has events.
 			if ((this.on && this.off))

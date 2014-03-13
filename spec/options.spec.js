@@ -30,6 +30,30 @@ describe('Class with the options mixin', function(){
 		expect(i.options.surname).toEqual('roberts');
 	});
 
+	it('Should have own options that don\'t reference proto chain', function(){
+
+		var A = primish({
+
+			implement: [options],
+
+			options: {
+				name: 'Bob'
+			},
+
+			constructor: function(options){
+				this.setOptions(options);
+			}
+
+		});
+
+		new A({
+			surname: 'Roberts'
+		});
+
+		expect(A.prototype.options.surname).not.toEqual('Roberts');
+
+	});
+
 	it('Should merge options on the instance with passed overriding prototype', function(){
 		var TestClass = primish({
 
