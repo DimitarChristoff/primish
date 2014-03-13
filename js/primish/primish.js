@@ -177,6 +177,8 @@
 
 		delete proto.constructor;
 
+		isObject(proto.options) && (proto.options = clone(proto.options));
+
 		if (superclass){
 			var superproto = superclass.prototype;
 			// inherit from superclass
@@ -218,6 +220,7 @@
 	primish.has = has;
 	primish.each = each;
 	primish.merge = merge;
+	primish.clone = clone;
 
 	// prime.create is Object.create polyfill
 	primish.create = create;
