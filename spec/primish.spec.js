@@ -54,6 +54,20 @@ describe('Should be able to assign ids to classes', function(){
 
 		expect(keys.indexOf('_id')).toBe(-1);
 	});
+
+	it('Should make any property starting with _ non-enumerable', function(){
+		var User = primish('User', {
+			_foo: 'bar',
+			foo: function(){
+				return this._foo;
+			}
+		});
+
+		var user = new User(), keys = Object.keys(user);
+
+		expect(keys.indexOf('_foo')).toBe(-1);
+		expect(user.foo()).toBe(user._foo);
+	});
 });
 
 describe('Calling `constructor` automatically', function(){

@@ -1,5 +1,5 @@
 /**
- * @module primish 0.3.3 - prototypal inheritance sugar, MooTools Style
+ * @module primish 0.3.6 - prototypal inheritance sugar, MooTools Style
  * @description browser-friendly or node-js Class sugar
  **/
 ;(function(factory){
@@ -99,15 +99,16 @@
 		}
 
 		// copies properties from other classes
-		each(proto, function(value, key){
+		each(proto, function(value, key, pd){
 			if (!key.match(escapeKeys)){
 				isObject(value) && (proto[key] = clone(value));
-				this.define(key, getOwnPropertyDescriptor(proto, key) || {
+				pd = {
 					writable: true,
-					enumerable: true,
+					enumerable: key.indexOf('_') !== 0,
 					configurable: true,
 					value: value
-				});
+				};
+				this.define(key, pd.enumerable ? getOwnPropertyDescriptor(proto, key) || pd : pd);
 			}
 		}, this);
 
