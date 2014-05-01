@@ -3,19 +3,21 @@
 (function(){
 	'use strict';
 
-	var nav = document.id('nav');
-	var main = document.id('content');
+	var nav = document.id('nav'),
+		main = document.id('content'),
+		runCode = '<span class="glyphicons .glyphicon-play-circle"></span> Run code',
+		closeCode = '<span class="glyphicons .glyphicon-remove"></span> close';
 
+	// convert code blocks that need ace
 	main.getElements('.lang-ace').each(function(el){
 
-		var html = el.get('text'),
+		var code = el.get('text'),
 			parent = el.getParent('pre'),
-			edit = new Element('div.ace', {
-				text: html
-			}).inject(parent, 'before');
+			edit = new Element('div.ace').set('html', code).inject(parent, 'before');
 
 		new Element('div.alert').adopt(
-			new Element('button.btn.btn-demo.btn-primary[text=Run this]')
+			new Element('button.btn.btn-demo.btn-primary[html=' + runCode + ']'),
+			new Element('button.btn.btn-demo.btn-close.pull-right.btn-danger[html='+ closeCode +']')
 		).inject(edit, 'after');
 
 		parent.destroy();
@@ -25,6 +27,7 @@
 		edit.store('editor', editor);
 	});
 
+	// add heading anchors for linking to h2/h3
 	main.getElements('h2,h3').each(function(el){
 		new Element('a', {
 			html: '&sect;',
@@ -34,24 +37,25 @@
 		}).inject(el, 'top');
 	});
 
+	// monitor scroll
 	nav && new moostrapScrollspy('sections', {
 		offset: 0,
 		onReady: function(){
 			this.scroll();
 			/* may want to overrride this
-			var handleClicks = function(e, el){
-				e.stop();
-				var target = el.get('href');
-				window.location.hash = target;
-				body.scrollTo(0, main.getElement(target).getPosition().y - 40);
-			};
+			 var handleClicks = function(e, el){
+			 e.stop();
+			 var target = el.get('href');
+			 window.location.hash = target;
+			 body.scrollTo(0, main.getElement(target).getPosition().y - 40);
+			 };
 
-			this.element.addEvent('click:relay(li > a)', handleClicks);
-			main.addEvent('click:relay(a[href^=#])', handleClicks);
-			*/
+			 this.element.addEvent('click:relay(li > a)', handleClicks);
+			 main.addEvent('click:relay(a[href^=#])', handleClicks);
+			 */
 		},
 		onActive: function(el, target){
-			var g = el.getParents("li").getLast();
+			var g = el.getParents('li').getLast();
 			g.addClass('active');
 			target.addClass('active');
 			nav.scrollTo(0, g.getPosition(this.element).y);
@@ -62,75 +66,69 @@
 		}
 	});
 
-	var buildWindow = function(el){
+	/**
+	 * @description create an iframe to host the code
+	 * @param {HTMLElement} el
+	 */
+	var buildWindow = function(el, close){
 		var editor = el.getParent().getPrevious().retrieve('editor');
 
-		var uid = Slick.uidOf(el),
+		var uid = Slick.uidOf(close ? el.getPrevious() : el),
 			iframe = document.id('demoFrame' + uid);
 
-		if (!iframe) {
-			// make example
-			new IFrame({
-				src: 'js/blank.html',
-				styles: {
-					width: '100%',
-					height: 400
-				},
-				'class': 'acely',
-				id: 'demoFrame' + uid,
-				events: {
-					load: function(){
-						new Element('script', {
-							type: 'text/javascript',
-							text: editor.getValue()
-						}).inject(this.contentDocument.body);
-					}
-				}
-			}).inject(el, 'after');
-		}
-		else {
-			// close example
+		if (iframe){
 			iframe.destroy();
+			iframe = null;
 		}
-	};
 
-	var toggleState = function(anchor){
-		var state = anchor.retrieve('isopen'),
-			map = {
-				true: {
-					text: 'Close example'
-				},
-				false: {
-					text: 'Run this'
+		if (close){
+			return;
+		}
+
+		// make example
+		new IFrame({
+			src: 'js/blank.html',
+			styles: {
+				width: '100%',
+				height: 400
+			},
+			'class': 'acely',
+			id: 'demoFrame' + uid,
+			events: {
+				// when blank.html loads, inject the script
+				load: function(){
+					new Element('script', {
+						id: 'code',
+						type: 'text/javascript',
+						text: editor.getValue()
+					}).inject(this.contentDocument.body);
 				}
-			};
+			}
+		}).inject(el.getParent(), 'bottom');
 
-		// when not set, it's the first time
-		state === null && (state = true);
-		anchor.set(map[state]).toggleClass('btn-warning').toggleClass('btn-info').store('isopen', !state);
 	};
 
-	// delegated event handler.
-	var handleClick = function(e, el){
-		e && e.stop();
-		var code = el.getPrevious('div.ace') || el.getParent().getPrevious('div.ace'),
-			editor,
-			module;
+	/**
+	 * @description handle the run this code
+	 * @param e
+	 * @param el
+	 * @returns {boolean}
+	 */
+	var runCode = function(e, el){
+		// delegated event handler.
 
-		if (!code) {
+		e && e.stop();
+		var code = el.getPrevious('div.ace') || el.getParent().getPrevious('div.ace');
+
+		if (!code){
 			return false;
 		}
 
-		editor = code.retrieve('editor');
-		module = el.get('data-module');
-
-		toggleState(el);
-		buildWindow(el);
-
-		// buildExample(module, editor.getValue(), el); - changed to linked iframe
+		//toggleState(el);
+		buildWindow(el, el.hasClass('btn-close'));
 	};
 
-	main.addEvent('click:relay(button.btn-demo)', handleClick);
+	main.addEvent('click:relay(button.btn-demo)', runCode);
 
 
 	prettyPrint();
