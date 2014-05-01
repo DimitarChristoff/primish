@@ -85,6 +85,9 @@ MooTools 1.x sugar into classes as possible.</p>
 <p><a class="btn btn-large btn-primary" rel="download" target="_blank" href="./js/primish/primish-min.js">primish-min.js (4.2k)</a></p>
 <h3 id="differences/changelog">Changelog</h3>
 <ul>
+<li>0.3.6 properties starting with <code>_</code> are configured as non-enumerable where possible</li>
+<li>0.3.5 bug fixes</li>
+<li>0.3.4 bug fixes</li>
 <li>0.3.3 requirejs 2.1.10 compatible bundles support via module ids</li>
 <li>0.3.2 requirejs uglify2 build</li>
 </ul>
@@ -145,12 +148,12 @@ MooTools 1.x sugar into classes as possible.</p>
                 this.$hid = hid++;
                 storage[this.$hid] = {};
                 // disallow changes to human id
-                prime.define(this, &#39;$hid&#39;, {
+                primish.define(this, &#39;$hid&#39;, {
                     writable: false,
                     enumerable: false
                 });
 
-                prime.define(this, &#39;name&#39;, {
+                primish.define(this, &#39;name&#39;, {
                     configurable: false,
                     get: function(){
                         return this.getName();
@@ -236,6 +239,18 @@ are not enumerable.</p>
 </code></pre>
 <p>Caveat: if your super Class has an ID but your subclass does not, it will still resolve this via the prototype chain
 and may incorrectly identify your instance as the parent. Make sure you use IDs recursively if you need them.</p>
+<h4 id="private-properties">private properties</h4>
+<p>Any prototype property that starts with an underscore (<code>_</code>) is automatically confgured to be non-enumerable. They are
+still write-able, just &#39;hidden&#39;.</p>
+<pre class="prettyprint linenums"><code class="lang-javascript">var User = primish({
+    _name: &#39;Bob&#39;,
+    name: function(){
+        return this._name;
+    }
+});
+
+console.log(Object.keys(new User())); // [&quot;name&quot;, ...], no _name
+</code></pre>
 <h3 id="creating-a-class/extend">extend</h3>
 <p>The special key <code>extend</code> defines what SuperClass your new Class will inherit from. It only accepts a single argument,
 pointing to another Class. The resulting new Class definition will have its prototype set to the SuperClass and inherit
@@ -455,7 +470,7 @@ in your Class instances (unlike when using <a href="#creating-a-class/extend">ex
             this.name = name;
 
             // make name readonly
-            prime.define(this, &#39;name&#39;, {
+            primish.define(this, &#39;name&#39;, {
                 writable: false,
                 enumerable: true
             });
