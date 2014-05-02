@@ -34,7 +34,7 @@
 			event = event.split(/\s+/);
 			var i = 0,
 				len = event.length,
-				listeners = this._listeners || primish.hide(this, '_listeners'),
+				listeners = this._listeners || primish.hide(this, '_listeners', {}),
 				events,
 				k,
 				pseudos,
@@ -62,7 +62,6 @@
 
 				for (k in events){
 					length++;
-					/* don't touch this, === breaks tests due to undefined after delete */
 					if (key == null && events[k] === fn) key = k;
 					if (key && length > 1) break;
 				}

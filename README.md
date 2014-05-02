@@ -16,9 +16,9 @@ Why fork prime in the first place? Well... prime is very good. But it is written
 - `.implement()` and `implement` mutator, like mootools. not `mixin`
 - `extend`, not `inherits`
 - `prime.merge()` shallow Object merging
-- object keys of constructor object are NOT dereferenced / cloned
-- only `options` key is merged with supers, not other objects
-- extras from prime like utils, shell, type, etc have all been removed, recommended util library is `lodash`
+- object keys of constructor object are NOT de-referenced / cloned
+- only `options` objects are automatically de-referenced like in MooTools, other objects will point to prototype and will be mutable
+- extras from prime like utils, shell, type, etc have all been removed, recommended util library is `lodash`.
 - primish classes can have IDs for reflection like in AMD.
 
 ### emitter changes
