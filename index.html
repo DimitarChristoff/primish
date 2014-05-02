@@ -56,9 +56,9 @@
 <li><code>.implement()</code> and <code>implement</code> mutator, like mootools. not <code>mixin</code></li>
 <li><code>extend</code>, not <code>inherits</code></li>
 <li><code>prime.merge()</code> shallow Object merging</li>
-<li>object keys of constructor object are NOT dereferenced / cloned</li>
-<li>only <code>options</code> key is merged with supers, not other objects</li>
-<li>extras from prime like utils, shell, type, etc have all been removed, recommended util library is <code>lodash</code></li>
+<li>object keys of constructor object are NOT de-referenced / cloned</li>
+<li>only <code>options</code> objects are automatically de-referenced like in MooTools, other objects will point to prototype and will be mutable</li>
+<li>extras from prime like utils, shell, type, etc have all been removed, recommended util library is <code>lodash</code>.</li>
 <li>primish classes can have IDs for reflection like in AMD.</li>
 </ul>
 <h3 id="differences/emitter-changes">emitter changes</h3>

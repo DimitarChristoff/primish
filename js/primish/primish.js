@@ -26,8 +26,8 @@
 	};
 
 	if (!{ valueOf: 0 }.propertyIsEnumerable('valueOf')){
-		var buggy = 'constructor,toString,valueOf,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString'.split(','),
-			proto = Object.prototype;
+		var proto = Object.prototype,
+			buggy = 'constructor,toString,valueOf,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString'.split(',');
 
 		each = function(object, method, context){
 			var key,
@@ -48,8 +48,7 @@
 
 	// use Object.create if available or polyfill
 	var create = Object.create || function(self){
-		var constructor = function(){
-		};
+		var constructor = function(){};
 		constructor.prototype = self;
 		return new constructor();
 	};
@@ -85,7 +84,11 @@
 
 	var escapeKeys = /^constructor|extend|define$/;
 
-	// the mixin is via Object.defineProperty for Object.keys (each)
+	/**
+	 * @description Adds properties from a proto config object to the new proto
+	 * @param {object} proto
+	 * @returns {function}
+	 */
 	var implement = function(proto){
 		if (has(proto, 'implement')){
 			// mixins: mutator key.
@@ -114,6 +117,12 @@
 		return this;
 	};
 
+	/**
+	 * @description calls to super class methods, passing arguments
+	 * @param {string} method - to call
+	 * @param {*} args - optional arguments to pass
+	 * @returns {*}
+	 */
 	var parent = function(method){
 		// call a method from immediate parent with scope of current object
 		// expected method argument
@@ -140,6 +149,12 @@
 		return copy;
 	};
 
+	/**
+	 * @description merge from right to left, returning left, cloning objects
+	 * @param {object} a
+	 * @param {object} b
+	 * @returns {object} a
+	 */
 	var merge = function merge(a, b){
 		// extending objects (merge)
 		var k,
@@ -157,7 +172,12 @@
 		return a;
 	};
 
-	// main
+	/**
+	 * @constructs primish
+	 * @param {string=} id of class for reflection, optional
+	 * @param {object} proto config object
+	 * @returns {function}
+	 */
 	var primish = function(id, proto){
 
 		if (typeof id === 'object'){
@@ -225,8 +245,14 @@
 	// prime.create is Object.create polyfill
 	primish.create = create;
 	primish.define = defineProperty;
-	primish.hide = function(obj, prop){
-		return obj[prop] = obj[prop] || {}, defineProperty(obj, prop, {enumerable: false, value: obj[prop]}), obj[prop];
+	/**
+	 * @description Adds a property to object and configures it as non-enumerable, returning it back
+	 * @param {object} obj - object to configure
+	 * @param {string} prop - property to configure
+	 * @param {*} value - initial value
+	 */
+	primish.hide = function(obj, prop, value){
+		return obj[prop] = obj[prop] || value, defineProperty(obj, prop, {enumerable: false, value: obj[prop]}), obj[prop];
 	};
 
 	return primish;
