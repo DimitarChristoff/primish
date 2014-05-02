@@ -75,7 +75,6 @@ module.exports = function(grunt){
 					optimize: 'uglify2',
 					out: './primish-min.js',
 					skipModuleInsertion: true,
-					// build all cept for components
 					include: [
 						'primish',
 						'options',
@@ -90,6 +89,6 @@ module.exports = function(grunt){
 	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
 	// By default, clean and generate docs
-	grunt.registerTask('default', ['clean','doctor', 'requirejs:build']);
+	grunt.registerTask('default', ['jshint', 'clean', 'doctor', 'requirejs:build']);
 	grunt.registerTask('test', ['jshint']);
 };

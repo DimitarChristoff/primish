@@ -3,12 +3,12 @@
 <head>
 	<title>IFRAME test for {{name}}</title>
 	<!-- via cssIncludes -->
-{{#cssIncludes}}	<link rel="stylesheet" href="css/{{.}}"/>
+{{#cssIncludes}}	<link rel="stylesheet" href="{{.}}"/>
 {{/cssIncludes}}
 </head>
 <body>
 <div id="main"></div>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js"></script>
 <!-- via jsIncludes -->
 {{#jsIncludes}}<script type="text/javascript" src="js/{{.}}"></script>
 {{/jsIncludes}}

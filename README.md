@@ -50,9 +50,8 @@ The minified packaged version weighs just 4.2K without gzipping, so a tiny footp
 
 ### Changelog
 
-- 0.3.6 properties starting with `_` are configured as non-enumerable where possible
-- 0.3.5 bug fixes
-- 0.3.4 bug fixes
+- 0.3.5 dereferencing `this.options` from protos, export of `primish.clone`
+- 0.3.4 fixed AMD module IDs for build to work better with bundles
 - 0.3.3 requirejs 2.1.10 compatible bundles support via module ids
 - 0.3.2 requirejs uglify2 build
 
@@ -226,22 +225,6 @@ require(['primish/primish'], function(primish){
 
 Caveat: if your super Class has an ID but your subclass does not, it will still resolve this via the prototype chain
 and may incorrectly identify your instance as the parent. Make sure you use IDs recursively if you need them.
-
-#### private properties
-
-Any prototype property that starts with an underscore (`_`) is automatically confgured to be non-enumerable. They are
-still write-able, just 'hidden'.
-
-```javascript
-var User = primish({
-	_name: 'Bob',
-	name: function(){
-		return this._name;
-	}
-});
-
-console.log(Object.keys(new User())); // ["name", ...], no _name
-```
 
 ### extend
 
