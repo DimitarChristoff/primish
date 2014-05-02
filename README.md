@@ -764,7 +764,10 @@ require([
 ```
 
 Have fun, examples in `./examples/` and also look at the `spec` folder (jasmine-node test runner).
-Most examples in the docs are runnable, just edit the code and press `run this`, then look at your console.
+Most examples in the docs are runnable, just edit the code and press `run`, then look at your console.
+
+A more complex example can be seen in [Epik](http://dimitarchristoff.github.io/epik/), a fully fledged MVC framework
+built on top of primish and lodash.
 
 ## License
 
