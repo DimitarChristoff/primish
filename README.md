@@ -3,7 +3,7 @@ primish
 
 A prime derivative that went beyond repair. Initially a fork of [MooTools prime](https://github.com/mootools/prime/), now with a lot of sugar. 
 
-Why fork prime in the first place? Well... prime is very good. But it is written as a CommonJS module and it needs a fair amount of packaging and bundling of plugins and behaviours in order to make it work in a browser. Having to repeat these tasks for every project became repetitive and tedious after a while, hence this mini release. It does not only do module packaging, there are some small changes in code.
+Why fork prime in the first place? Although prime is very good, it has been in the making for two years and is not released yet. It's also written for CommonJS and it needs a fair amount of packaging, bundling of plugins and behaviours in order to make it work in a browser (via `browserify` or `wrapup`). It also tries to provide its own utilities methods and helpers, something that a lot of people have solved via `lodash`/`undersore`. It also does not try to keep the MooTools Class API / features. Primish does not only fix the module packaging (UMD!), there are considerable changes in code to make it more Classy and it is bower-ready and available on cdnjs for immediate use.
 
 [![NPM version](https://badge.fury.io/js/primish.png)](http://badge.fury.io/js/primish)
 
