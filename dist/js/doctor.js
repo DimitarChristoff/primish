@@ -1,5 +1,5 @@
 /*jshint mootools:true */
-/*global moostrapScrollspy, prettyPrint, ace */
+/*global moostrapScrollspy, prettyPrint, ace, IFrame */
 (function(){
 	'use strict';
 
@@ -11,7 +11,7 @@
 	// convert code blocks that need ace
 	main.getElements('.lang-ace').each(function(el){
 
-		var code = el.get('text'),
+		var code = el.get('html'),
 			parent = el.getParent('pre'),
 			edit = new Element('div.ace').set('html', code).inject(parent, 'before');
 
@@ -114,7 +114,7 @@
 	 * @param el
 	 * @returns {boolean}
 	 */
-	var runCode = function(e, el){
+	var run = function(e, el){
 		// delegated event handler.
 
 		e && e.stop();
@@ -128,7 +128,7 @@
 		buildWindow(el, el.hasClass('btn-close'));
 	};
 
-	main.addEvent('click:relay(button.btn-demo)', runCode);
+	main.addEvent('click:relay(button.btn-demo)', run);
 
 
 	prettyPrint();
