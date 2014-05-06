@@ -50,6 +50,7 @@ The minified packaged version weighs just 4.2K without gzipping, so a tiny footp
 
 ### Changelog
 
+- 0.3.6 perf fixes for emitter.trigger, tiny doc changes, jsdoc notation
 - 0.3.5 dereferencing `this.options` from protos, export of `primish.clone`
 - 0.3.4 fixed AMD module IDs for build to work better with bundles
 - 0.3.3 requirejs 2.1.10 compatible bundles support via module ids

@@ -14,21 +14,45 @@
 }).call(this, function(primish){
 	var slice = Array.prototype.slice;
 
+	/**
+	 * unique event ids to store in object
+	 * @type {number}
+	 */
 	var EID = 0;
 
+	/**
+	 * @description known / registered pseudo events, used via :
+	 * @type {{once: once}}
+	 */
 	var pseudoEvents = {
-		once: function(eventName, fn){
+		/**
+		 * @description Subscribe to a once-only, event pseudo
+		 * @param {string} event - prefix string (eg. use change:once)
+		 * @param {function} fn - function to call once
+		 * @returns {function} wrapped fn
+		 */
+		once: function(event, fn){
 			var self = this,
 				wrapped = function(){
 					fn.apply(this, arguments);
-					self.off(eventName, wrapped);
+					self.off(event, wrapped);
 				};
 			return wrapped;
 		}
 	};
 
+	/**
+	 * @class emitter
+	 * @description mixin class for firing class events
+	 */
 	var emitter = primish({
 
+		/**
+		 * @description subscribes to an event handler
+		 * @param {string} event - name of the event or multiple events, separated by space
+		 * @param {function) fn - function to call when event matches
+		 * @returns {emitter}
+		 */
 		on: function(event, fn){
 			// supports multiple events split by white space
 			event = event.split(/\s+/);
@@ -56,10 +80,21 @@
 			return this;
 		},
 
+		/**
+		 * @description unsubscribes from an event, needs exact name and saved fn ref to find a match
+		 * @param {string} event - single event name
+		 * @param {function} fn - matching callback to remove
+		 * @returns {emitter}
+		 */
 		off: function(event, fn){
-			var listeners = this._listeners, events, key, length = 0, l, k;
-			if (listeners && (events = listeners[event])){
+			var listeners = this._listeners,
+				events,
+				key,
+				length = 0,
+				l,
+				k;
 
+			if (listeners && (events = listeners[event])){
 				for (k in events){
 					length++;
 					if (key == null && events[k] === fn) key = k;
@@ -72,6 +107,7 @@
 						// delete so that the order of the array remains unaffected, making it sparse
 						delete listeners[event];
 						for (l in listeners) return this;
+						// none left, remove listeners prop
 						delete this._listeners;
 					}
 				}
@@ -79,18 +115,23 @@
 			return this;
 		},
 
+		/**
+		 * @description fires an event
+		 * @param {string} event name
+		 * @param {*=} arg1 optional arguments
+		 * @param {*=} argN optional arguments
+		 * @returns {emitter}
+		 */
 		trigger: function(event){
-			var listeners = this._listeners,
-				events,
+			var events = this._listeners,
 				k,
-				args = slice.call(arguments, 1),
-				copy = {};
+				args;
 
-			if (listeners && (events = listeners[event])){
-				for (k in events) copy[k] = events[k];
-				for (k in copy) copy[k].apply(this, args);
+			if (events){
+				events = events[event] || {};
+				args = arguments.length > 1 ? slice.call(arguments, 1) : [];
+				for (k in events) events[k].apply(this, args);
 			}
-
 			return this;
 		}
 
