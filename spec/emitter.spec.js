@@ -145,6 +145,24 @@ describe('Older tests from prime-emitter', function(){
 		expect(called).toBe(2);
 	});
 
+	it('Should not affect call queue when an event is removed', function(){
+		var events = new emitter(),
+			called = 0,
+			onFoo = function(){
+				called++;
+				events.off('foo', onFoo);
+			};
+		events.on('foo', onFoo);
+		events.on('foo', function(){
+			called++;
+		});
+
+		events.trigger('foo');
+		expect(called).toBe(2);
+		events.trigger('foo');
+		expect(called).toBe(3);
+	});
+
 	it('Should allow you to define custom pseudos', function(){
 		var events = new emitter(), called = 0;
 		var isAdmin = false;

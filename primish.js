@@ -46,7 +46,11 @@
 		};
 	}
 
-	// use Object.create if available or polyfill
+	/**
+	 * @description Object.create pollyfil
+	 * @param {object} self - prototype object to use
+	 * @returns {object} new object
+	 */
 	var create = Object.create || function(self){
 		var constructor = function(){};
 		constructor.prototype = self;
@@ -139,8 +143,12 @@
 		return result;
 	};
 
+	/**
+	 * @description dereference and shallow clone an object
+	 * @param {object} obj - object to clone
+	 * @returns {obj} cloned object
+	 */
 	var clone = function(obj){
-		// clones an object, needs a constructor
 		var copy = create(obj),
 			key;
 		for (key in obj){
@@ -150,7 +158,7 @@
 	};
 
 	/**
-	 * @description merge from right to left, returning left, cloning objects
+	 * @description deep merge from right to left, returning left, cloning objects
 	 * @param {object} a
 	 * @param {object} b
 	 * @returns {object} a
@@ -174,9 +182,9 @@
 
 	/**
 	 * @constructs primish
-	 * @param {string=} id of class for reflection, optional
-	 * @param {object} proto config object
-	 * @returns {function}
+	 * @param {string=} id - id of class for reflection, optional
+	 * @param {object} proto - config object to get props from
+	 * @returns {function} constructor
 	 */
 	var primish = function(id, proto){
 
