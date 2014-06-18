@@ -25,7 +25,7 @@ module.exports = function(grunt){
 					output: '<%= output%>',
 					title: 'primish - a MooTools prime fork for the browser, Class-based OOP in JavaScript',
 					images: 'example/images',
-					logo: 'images/primish.png',
+					logo: 'images/primish-small-white.png',
 					twitter: 'D_mitar',
 					travis: 'http://travis-ci.org/DimitarChristoff/primish',
 					github: 'https://github.com/DimitarChristoff/primish',
@@ -46,6 +46,11 @@ module.exports = function(grunt){
 							filter: function(name){
 								return name !== 'Gruntfile.js';
 							}
+						}, {
+							src: 'example/favicon.ico',
+							dest: '<%= output%>/favicon.ico',
+							flatten: true,
+							expand: false
 						}]
 					}
 				},
