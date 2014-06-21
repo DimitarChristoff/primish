@@ -1,10 +1,7 @@
 {
   "name": "primish",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "main": [
-    "prime.js",
-    "emitter.js",
-    "options.js",
     "primish-min.js"
   ],
   "ignore": [
