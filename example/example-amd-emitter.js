@@ -1,8 +1,15 @@
+require.config({
+	paths: {
+		'primish/primish': '../primish',
+		'primish/emitter': '../emitter'
+	}
+});
+
 define(function(require){
 	'use strict';
 
-	var primish = require('../primish'),
-		emitter = require('../emitter');
+	var primish = require('primish/primish'),
+		emitter = require('primish/emitter');
 
 
 	var Human = primish({
@@ -12,6 +19,7 @@ define(function(require){
 		constructor: function(name){
 			this.dob = (new Date()).getTime();
 			this.name = name || 'unknown';
+			this.age = 0;
 		},
 
 		getAge: function(){
@@ -20,6 +28,10 @@ define(function(require){
 
 		getName: function(){
 			return this.name;
+		},
+
+		live: function(years){
+			this.age += years;
 		}
 
 	}),
@@ -38,6 +50,10 @@ define(function(require){
 
 		setRank: function(rank){
 			this.rank = rank;
+		},
+
+		live: function(years){
+			this.parent('live', years);
 		}
 	});
 
@@ -59,6 +75,28 @@ define(function(require){
 		bob.trigger('done');
 
 		console.log(chuck.getName(), chuck.getAge(), chuck.getRank());
+
+//		var c = 500000;
+//		console.time('parent');
+//		while (c--)
+//			chuck.live(1);
+//		console.timeEnd('parent');
+
 	}, 1000);
 
+
+	return;
+	var foo = new emitter();
+
+	foo.on('foo', function(bar){
+		bar;
+	});
+
+	setTimeout(function(){
+		var c = 500000;
+		console.time('events:trigger');
+		while (c--)
+			foo.trigger('foo').trigger('foo', 'bar');
+		console.timeEnd('events:trigger');
+	}, 5000);
 });

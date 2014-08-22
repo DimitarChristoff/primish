@@ -1,7 +1,14 @@
+require.config({
+	paths: {
+		'primish/primish': '../primish',
+		'primish/emitter': '../emitter'
+	}
+});
+
 define(function(require){
 	'use strict';
 
-	var primish = require('../primish'),
+	var primish = require('primish/primish'),
 		Human = primish({
 
 			constructor: function(name){

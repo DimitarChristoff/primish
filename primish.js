@@ -58,7 +58,11 @@
 	};
 
 	// slice reference
-	var slice = Array.prototype.slice;
+	var slice = function(args, pos){
+		pos = ~~pos;
+		var i = -1, l = args.length - pos, x = Array(l);
+		while (++i < l) x[i] = args[i+pos]; return x;
+	};
 
 	var isObject = (function(){
 		var toString = Object.prototype.toString,
@@ -138,7 +142,7 @@
 			throw new Error('You need to pass a valid super method to .parent', '');
 		}
 
-		result = parent[method].apply(this, slice.call(arguments, 1));
+		result = parent[method].apply(this, slice(arguments, 1));
 		this._parent = parent;
 		return result;
 	};
