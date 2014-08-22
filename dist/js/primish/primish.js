@@ -57,8 +57,17 @@
 		return new constructor();
 	};
 
-	// slice reference
-	var slice = Array.prototype.slice;
+	/**
+	 * @description Faster slice w/o ownProperty checks
+	 * @param {Array|Object} args array or arguments object
+	 * @param {Number} pos index to slice from
+	 * @returns {Array}
+	 */
+	var slice = function(args, pos){
+		pos = ~~pos;
+		var i = -1, l = args.length - pos, x = Array(l);
+		while (++i < l) x[i] = args[i+pos]; return x;
+	};
 
 	var isObject = (function(){
 		var toString = Object.prototype.toString,
@@ -138,7 +147,7 @@
 			throw new Error('You need to pass a valid super method to .parent', '');
 		}
 
-		result = parent[method].apply(this, slice.call(arguments, 1));
+		result = parent[method].apply(this, slice(arguments, 1));
 		this._parent = parent;
 		return result;
 	};
@@ -244,11 +253,12 @@
 		return constructor.implement(proto);
 	};
 
-	// exports
+	// helper exports
 	primish.has = has;
 	primish.each = each;
 	primish.merge = merge;
 	primish.clone = clone;
+	primish.slice = slice;
 
 	// prime.create is Object.create polyfill
 	primish.create = create;

@@ -12,11 +12,7 @@
 		this.emitter = factory(this.primish);
 	}
 }).call(this, function(primish){
-	var slice = function(args, pos){
-		pos = ~~pos;
-		var i = -1, l = args.length - pos, x = Array(l);
-		while (++i < l) x[i] = args[i+pos]; return x;
-	};
+	var slice = primish.slice;
 
 	/**
 	 * unique event ids to store in object
@@ -131,10 +127,9 @@
 				k,
 				args;
 
-			if (events){
-				events = events[event] || {};
+			if (events && events[event]){
 				args = arguments.length > 1 ? slice(arguments, 1) : [];
-				for (k in events) events[k].apply(this, args);
+				for (k in events[event]) events[event][k].apply(this, args);
 			}
 			return this;
 		}

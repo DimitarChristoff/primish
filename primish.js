@@ -57,7 +57,12 @@
 		return new constructor();
 	};
 
-	// slice reference
+	/**
+	 * @description Faster slice w/o ownProperty checks
+	 * @param {Array|Object} args array or arguments object
+	 * @param {Number} pos index to slice from
+	 * @returns {Array}
+	 */
 	var slice = function(args, pos){
 		pos = ~~pos;
 		var i = -1, l = args.length - pos, x = Array(l);
@@ -248,11 +253,12 @@
 		return constructor.implement(proto);
 	};
 
-	// exports
+	// helper exports
 	primish.has = has;
 	primish.each = each;
 	primish.merge = merge;
 	primish.clone = clone;
+	primish.slice = slice;
 
 	// prime.create is Object.create polyfill
 	primish.create = create;

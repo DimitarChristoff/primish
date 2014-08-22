@@ -85,7 +85,6 @@ define(function(require){
 	}, 1000);
 
 
-	return;
 	var foo = new emitter();
 
 	foo.on('foo', function(bar){
