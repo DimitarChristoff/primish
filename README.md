@@ -50,6 +50,8 @@ The minified packaged version weighs just 4.2K without gzipping, so a tiny footp
 
 ### Changelog
 
+- 0.3.8 performance optimisations for primish/emitter
+- 0.3.7 tweaks for bower consumption
 - 0.3.6 perf fixes for emitter.trigger, tiny doc changes, jsdoc notation
 - 0.3.5 dereferencing `this.options` from protos, export of `primish.clone`
 - 0.3.4 fixed AMD module IDs for build to work better with bundles
@@ -69,6 +71,7 @@ The minified packaged version weighs just 4.2K without gzipping, so a tiny footp
 To create a new Class, you simply need to do:
 
 ```ace
+// under AMD
 require(['primish/primish'], function(primish){
 
 	var Human = primish({
@@ -108,6 +111,22 @@ require(['primish/primish'], function(primish){
 	console.log(Bob.getName()); // 'Bob'
 
 });
+```
+
+For node / CommonJS:
+```javascript
+var primish = require('primish'),
+	options = require('primish/options');
+
+var Human = primish({
+	implement: [options],
+	constructor: function(options){
+		this.setOptions(options);
+	}
+});
+
+var Bob = new Human({name: 'Bob'});
+console.log(Bob.options.name); // 'Bob'
 ```
 
 Here is an example that will make the name property `readonly` and  example private variables
