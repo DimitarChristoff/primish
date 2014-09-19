@@ -161,7 +161,7 @@
 		var copy = create(obj),
 			key;
 		for (key in obj){
-			if (obj.hasOwnProperty(key)) copy[key] = obj[key];
+			if (hasOwnProperty.call(obj, key)) copy[key] = obj[key];
 		}
 		return copy;
 	};
@@ -184,7 +184,7 @@
 		if (a == null || b == null)
 			return a;
 
-		for (k in b) if (b.hasOwnProperty(k)) callback(k);
+		for (k in b) if (hasOwnProperty.call(b, k)) callback(k);
 
 		return a;
 	};

@@ -50,6 +50,7 @@ The minified packaged version weighs just 4.2K without gzipping, so a tiny footp
 
 ### Changelog
 
+- 0.3.9 safer hasOwnProperty checks
 - 0.3.8 performance optimisations for primish/emitter
 - 0.3.7 tweaks for bower consumption
 - 0.3.6 perf fixes for emitter.trigger, tiny doc changes, jsdoc notation
