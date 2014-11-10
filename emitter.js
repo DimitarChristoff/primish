@@ -128,8 +128,13 @@
 				args;
 
 			if (events && events[event]){
-				args = arguments.length > 1 ? slice(arguments, 1) : [];
-				for (k in events[event]) events[event][k].apply(this, args);
+				if (arguments.length > 1){
+					args = slice(arguments, 1);
+					for (k in events[event]) events[event][k].apply(this, args);
+				}
+				else {
+					for (k in events[event]) events[event][k].call(this);
+				}
 			}
 			return this;
 		}
